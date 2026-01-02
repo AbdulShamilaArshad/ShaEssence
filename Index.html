@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Sha Essence Perfumes</title>
+                
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        margin: 0;
+                        background: #1C3A33;
+                    }
+                    header {
+                        background: #000000;  /* pure black */
+                        color: white;
+                        padding: 15px;
+                        text-align: center;
+                    }
+                    
+                    /* Buttons on product cards */
+                    .card button {
+                        background: #d4af37;  /* gold color */
+                        color: black;
+                        border: none;
+                        padding: 10px;
+                        margin-top: 10px;
+                        cursor: pointer;
+                        font-weight: bold;
+                        transition: background 0.3s ease;
+                    }
+                    .card button:hover {
+                        background: #b8952a; /* slightly darker gold on hover */
+                    }
+                    
+                    
+                    
+                    footer {
+                        background: #1C3A33;
+                        color: white;
+                        text-align: center;
+                        padding: 10px;
+                    }
+                    
+                    
+                    .container {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                        gap: 20px;
+                        padding: 20px;
+                    }
+                    .card {
+                        background: white;
+                        border-radius: 8px;
+                        padding: 15px;
+                        text-align: center;
+                    }
+                    .card img {
+                        width: 100%;
+                        height: 200px;
+                        object-fit: cover;
+                    }
+                    
+                    .cart {
+                        background: white;
+                        padding: 20px;
+                        margin: 20px;
+                        border-radius: 8px;
+                    }
+                    .cart li {
+                        display: flex;
+                        justify-content: space-between;
+                        padding: 10px 0;
+                        border-bottom: 1px dashed #ddd;
+                        font-size: 15px;
+                        color: #333;
+                    }
+                    
+                    .cart li strong {
+                        color: #000;
+                    }
+                    
+                    
+                    .cart-item-right {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                    }
+                    
+                    .cart-price {
+                        font-weight: bold;
+                    }
+                    
+                    /* Remove icon style */
+                    .remove-icon {
+                        color: #d4af37; /* gold */
+                        cursor: pointer;
+                        font-size: 16px;
+                        transition: color 0.3s ease;
+                    }
+                    
+                    .remove-icon:hover {
+                        color: #b8952a;
+                    }
+                    
+                    
+                    .section-title {
+                        color: #f7f7f7; /* White */
+                        padding: 10px 20px;
+                        font-size: 20px;
+                        font-weight: bold;
+                    }
+                </style>
+            </head>
+    
+    <body>
+        
+        <header style="background: #1C3A33; padding: 15px; text-align: center;">
+          <img src="ShaEssencewithoutText.PNG" alt="Sha Essence Logo"
+               style="height: 50px; vertical-align: middle; margin-right: 10px;margin-top: 10px;">
+          <span style="color: white; font-size: 28px; margin-left: -24px;font-weight: bold; vertical-align: middle;">
+            Sha Essence
+          </span>
+          <p style="color: #D4AF37; margin-top: -15px; margin-left: 50px; font-size: 10px; letter-spacing: 1px;">
+            Unveil the Power of Aroma
+          </p>
+          <p style="color: white;  margin-left: 20px; margin-top: 5px;">French & Luxury Perfumes</p>
+        </header>
+        
+        <div class="section-title">🌿 French Perfumes (25 ML)</div>
+        <section class="container" id="products"></section>
+        
+        <div class="section-title">💎 Luxury Perfumes (25 ML)</div>
+        <section class="container" id="luxuryProducts"></section>
+        
+        <div class="cart">
+            <h2>🛒 Cart</h2>
+            <ul id="cartItems"></ul>
+            <h3>Total: ₹<span id="total">0</span></h3>
+        </div>
+        
+        <footer>
+            <p>© 2026 Sha Essence Fragrances</p>
+        </footer>
+        
+        <script>
+            let total = 0;
+            
+            function addToCart(name, price) {
+                const cartItems = document.getElementById("cartItems");
+                const li = document.createElement("li");
+                
+                li.innerHTML = `
+            <span>${name} - ₹${price}</span>
+            <span class="remove-icon" onclick="removeItem(this, ${price})">✖</span>
+          `;
+          
+          cartItems.appendChild(li);
+          total += price;
+          document.getElementById("total").innerText = total;
+            }
+            
+            function removeItem(icon, price) {
+                icon.parentElement.remove();
+                total -= price;
+                document.getElementById("total").innerText = total;
+            }
+            
+            /* ✅ French Perfumes */
+            const frenchPerfumes = [
+                                    { name: "Jannatul Firdaus", inspired: "Jannatul Firdaus", image: "images/1JannatulFirdausQuality.png" },
+                                    { name: "Victory Seven", inspired: "CR7", image: "images/2VictorySevenQuality.png" },
+                                    { name: "Bold Executive", inspired: "Hugo Boss", image: "images/6BoldExecutiveQuality.png" },
+                                    { name: "Blue Current", inspired: "Cool Water Blue", image: "images/7OceanAzureQuality.png" },
+                                    { name: "Velora", inspired: "Escada", image: "images/5VeloraQuality.png" },
+                                    { name: "Royal Ascent", inspired: "Creed Aventus", image: "images/4RoyalAscentQuality.png" },
+                                    { name: "Arabian Veil", inspired: "Sabaya", image: "images/3ArabianVeilQuality.png" },
+                                    { name: "Elite Sport", inspired: "Polo Sport", image: "images/9EliteSportQuality.png" },
+                                    { name: "Black Signature", inspired: "Classic Black", image: "images/8BlackSignatureQuality.png" },
+                                    { name: "Crimson Desire", inspired: "Desire Red", image: "images/10CrimsonDesireQuality.png" },
+                                    
+                                    { name: "Azure Desire", inspired: "Desire Blue", image: "images/azure-desire.jpg" },
+                                    { name: "Azure Dolce", inspired: "D&G Light Blue", image: "images/azure-dolce.jpg" },
+                                    { name: "Blue Legend", inspired: "Blue Man", image: "images/blue-legend.jpg" },
+                                    { name: "Amethyst Oud", inspired: "Purple Oud", image: "images/amethyst-oud.jpg" },
+                                    { name: "Noir Cocoa", inspired: "Chanel Coco", image: "images/noir-cocoa.jpg" },
+                                    { name: "Urban Escape", inspired: "Burberry Weekend", image: "images/urban-escape.jpg" },
+                                    { name: "Bleu Essence", inspired: "Blue De Channel", image: "images/bleu-essence.jpg" },
+                                    { name: "Infinite Grace", inspired: "Eternity", image: "images/infinite-grace.jpg" },
+                                    { name: "Triumph", inspired: "Invictus", image: "images/triumph.jpg" }
+                                    ];
+                                    
+                                    /* ✅ Luxury Perfumes */
+                                    const luxuryPerfumes = [
+                                                            { name: "Marine Voyageur", inspired: "Nautica Voyage", image: "images/marine-voyageur.jpg" },
+                                                            { name: "Road Legend", inspired: "Harley Davidson", image: "images/road-legend.jpg" },
+                                                            { name: "Silver Pulse", inspired: "Chrome Azzaro", image: "images/silver-pulse.jpg" },
+                                                            { name: "Maison Élité", inspired: "Givenchy", image: "images/maison-elite.jpg" },
+                                                            { name: "Pure Oud Essence", inspired: "White Oud", image: "images/pure-oud-essence.jpg" }
+                                                            ];
+                                                            
+                                                            /* ✅ Load Products */
+                                                            function loadProducts(list, containerId) {
+                                                                const container = document.getElementById(containerId);
+                                                                
+                                                                list.forEach(item => {
+                                                                    const card = document.createElement("div");
+                                                                    card.className = "card";
+                                                                    
+                                                                    card.innerHTML = `
+              <img src="${item.image}" alt="${item.name}">
+              <h3>${item.name}</h3>
+              <small>Inspired from ${item.inspired}</small>
+              <p><strong>25 ML</strong></p>
+              <p>₹349</p>
+              <button onclick="addToCart('${item.name}', 349)">Add to Cart</button>
+            `;
+            
+            container.appendChild(card);
+                                                                });
+                                                            }
+            
+            loadProducts(frenchPerfumes, "products");
+            loadProducts(luxuryPerfumes, "luxuryProducts");
+        </script>
+        
+        
+    </body>
+</html>
