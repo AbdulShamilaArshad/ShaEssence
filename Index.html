@@ -11,12 +11,163 @@
                         margin: 0;
                         background: #1C3A33;
                     }
+                    
+                    /* ================= HEADER ================= */
                     header {
-                        background: #000000;  /* pure black */
+                        background: #1C3A33;
                         color: white;
                         padding: 15px;
                         text-align: center;
                     }
+
+                    /* ===== Full Screen Hero Slider ===== */
+                    /* ===== Half Screen Hero Slider (50%) ===== */
+                    .slider {
+                      position: relative;
+                      width: 100%;
+                      height: 50vh;          /* 🔥 50% screen height */
+                      background: #000;
+                      overflow: hidden;
+                      z-index: 1;
+                    }
+
+
+                    .slides {
+                      display: flex;
+                      height: 100%;
+                      transition: transform .9s cubic-bezier(.22,.61,.36,1);
+                    }
+
+                    .slide {
+                      min-width: 100%;
+                      height: 100%;
+                      position: relative;
+                    }
+
+                    .slide img {
+                      width: 100%;
+                      height: 100%;
+                      object-fit: cover;
+                      transform: scale(1.04);
+                    }
+
+                    /* ===== Left Side Blur Overlay ===== */
+                    .slider::before {
+                      content: "";
+                      position: absolute;
+                      top: 0;
+                      left: 0;
+                      width: 7%;              /* 🔥 Left area width */
+                      height: 100%;
+                      z-index: 3;
+                      pointer-events: none;
+
+                      backdrop-filter: blur(100px);     /* Mild blur */
+                      -webkit-backdrop-filter: blur(100px);
+
+                      /* Smooth fade to normal */
+                      mask-image: linear-gradient(
+                        to right,
+                        rgba(1,1,1,1),
+                        rgba(1,1,1,1)
+                      );
+                    }
+                    
+                    /* ===== Right Side Blur Overlay ===== */
+                    .slider::after {
+                      content: "";
+                      position: absolute;
+                      top: 0;
+                      right: 0;
+                      width: 7%;               /* 🔥 Right blur width */
+                      height: 100%;
+                      z-index: 3;
+                      pointer-events: none;
+
+                      backdrop-filter: blur(100px);     /* Mild blur */
+                      -webkit-backdrop-filter: blur(100px);
+
+                      /* Smooth fade to normal */
+                      mask-image: linear-gradient(
+                        to right,
+                        rgba(1,1,1,1),
+                        rgba(1,1,1,1)
+                      );
+                    }
+
+
+
+
+                    /* ===== Product Glass Card ===== */
+                    .product-card {
+                      position: absolute;
+                      left: 8%;
+                      bottom: 14%;
+                      z-index: 2;
+                      width: 80%;
+                      height: 70%;
+                      padding: 22px 24px;
+                      color: #fff;
+                      border-radius: 16px;
+                      backdrop-filter: blur(2px);
+                      background: rgba(0,0,0,.35);
+                      border: 1px solid rgba(212,175,55,.35);
+                      box-shadow: 0 20px 60px rgba(0,0,0,.45);
+                      animation: rise .9s ease both;
+                    }
+
+                    @keyframes rise {
+                      from { transform: translateY(24px); opacity: 0 }
+                      to   { transform: translateY(0);   opacity: 1 }
+                    }
+
+                    .product-card h1 {
+                      margin: 0 0 8px;
+                      font-size: 42px;
+                      letter-spacing: .5px;
+                    }
+
+                    .product-card p {
+                      margin: 6px 0;
+                      opacity: .9;
+                    }
+
+                    .product-card .price {
+                      margin-top: 10px;
+                      font-size: 28px;
+                      font-weight: 700;
+                      color: #d4af37;
+                    }
+
+                    .product-card button {
+                      margin-top: 16px;
+                      padding: 12px 22px;
+                      border-radius: 10px;
+                      border: none;
+                      font-weight: 800;
+                      background: #d4af37;
+                      color: #000;
+                      cursor: pointer;
+                    }
+
+                    /* ===== Dots ===== */
+                    .dots {
+                      position: absolute;
+                      bottom: 24px;
+                      width: 100%;
+                      display: flex;
+                      justify-content: center;
+                      gap: 10px;
+                      z-index: 5;
+                    }
+                    .dot {
+                      width: 10px; height: 10px;
+                      border-radius: 50%;
+                      background: rgba(255,255,255,.4);
+                      cursor: pointer;
+                    }
+                    .dot.active { background: #d4af37; }
+
                     
                     /* Buttons on product cards */
                     .card button {
@@ -110,13 +261,31 @@
                         font-size: 20px;
                         font-weight: bold;
                     }
+                    
+                    .whatsapp-float {
+                        position: fixed;
+                        bottom: 20px;
+                        right: 20px;
+                        z-index: 1000;
+                        cursor: pointer;
+                    }
+                    
+                    
                 </style>
             </head>
     
+
+    
     <body>
         
+        <a href="#" onclick="sendWhatsAppOrder()" class="whatsapp-float">
+            <img src="https://img.icons8.com/color/48/000000/whatsapp.png"
+                 alt="WhatsApp"
+                 style="width:55px;height:55px;">
+        </a>
+        
         <header style="background: #1C3A33; padding: 15px; text-align: center;">
-          <img src="https://raw.githubusercontent.com/AbdulShamilaArshad/ShaEssence/main/ShaEssencewithoutText.png" alt="Sha Essence Logo"
+          <img src="ShaEssenceOnly.PNG" alt="Sha Essence Logo"
                style="height: 50px; vertical-align: middle; margin-right: 10px;margin-top: 10px;">
           <span style="color: white; font-size: 28px; margin-left: -24px;font-weight: bold; vertical-align: middle;">
             Sha Essence
@@ -126,6 +295,12 @@
           </p>
           <p style="color: white;  margin-left: 20px; margin-top: 5px;">French & Luxury Perfumes</p>
         </header>
+        
+
+        <div class="slider">
+          <div class="slides" id="slides"></div>
+          <div class="dots" id="dots"></div>
+        </div>
         
         <div class="section-title">🌿 French Perfumes (25 ML)</div>
         <section class="container" id="products"></section>
@@ -144,7 +319,50 @@
         </footer>
         
         <script>
+            
+            
+            const sliderProducts = [
+                { name: "Jannatul Firdaus", inspired: "Jannatul Firdaus", image: "images/1JannatulFirdausQuality.png" },
+                { name: "Victory Seven", inspired: "CR7", image: "images/2VictorySevenQuality.png" },
+                { name: "Bold Executive", inspired: "Hugo Boss", image: "images/6BoldExecutiveQuality.png" },
+                { name: "Ocean Azure", inspired: "Cool Water Blue", image: "images/7BlueCurrentQuality.png" },
+                { name: "Velora", inspired: "Escada", image: "images/5VeloraQuality.png" },
+                { name: "Royal Ascent", inspired: "Creed Aventus", image: "images/4RoyalAscentQuality.png" },
+                { name: "Arabian Veil", inspired: "Sabaya", image: "images/3ArabianVeilQuality.png" },
+                { name: "Elite Sport", inspired: "Polo Sport", image: "images/9EliteSportQuality.png" },
+                { name: "Black Signature", inspired: "Classic Black", image: "images/8BlackSignatureQuality.png" },
+                { name: "Crimson Desire", inspired: "Desire Red", image: "images/10CrimsonDesireQuality.png" },
+                { name: "Azudream", inspired: "Desire Blue", image: "images/11AzudreamQuality.png" },
+                { name: "Azurielle", inspired: "D&G Light Blue", image: "images/12AzurielleQuality.png" }
+            ];
+            
+
+            
+            
             let total = 0;
+            
+            const phoneNumber = "919487860718";
+            
+            function sendWhatsAppOrder() {
+                const cartItems = document.querySelectorAll("#cartItems li");
+
+                if (cartItems.length === 0) {
+                    alert("Your cart is empty");
+                    return;
+                }
+
+                let message = "🛍️ *Sha Essence Order*%0A%0A";
+
+                cartItems.forEach(item => {
+                    message += "• " + item.innerText.replace("✖", "").trim() + "%0A";
+                });
+
+                message += "%0A💰 *Total:* ₹" + total;
+
+                const url = `https://wa.me/${phoneNumber}?text=${message}`;
+
+                window.open(url, "_blank");
+            }
             
             function addToCart(name, price) {
                 const cartItems = document.getElementById("cartItems");
@@ -171,7 +389,7 @@
                                     { name: "Jannatul Firdaus", inspired: "Jannatul Firdaus", image: "images/1JannatulFirdausQuality.png" },
                                     { name: "Victory Seven", inspired: "CR7", image: "images/2VictorySevenQuality.png" },
                                     { name: "Bold Executive", inspired: "Hugo Boss", image: "images/6BoldExecutiveQuality.png" },
-                                    { name: "Blue Current", inspired: "Cool Water Blue", image: "images/7OceanAzureQuality.png" },
+                                    { name: "Blue Current", inspired: "Cool Water Blue", image: "images/7BlueCurrentQuality.png" },
                                     { name: "Velora", inspired: "Escada", image: "images/5VeloraQuality.png" },
                                     { name: "Royal Ascent", inspired: "Creed Aventus", image: "images/4RoyalAscentQuality.png" },
                                     { name: "Arabian Veil", inspired: "Sabaya", image: "images/3ArabianVeilQuality.png" },
@@ -179,49 +397,151 @@
                                     { name: "Black Signature", inspired: "Classic Black", image: "images/8BlackSignatureQuality.png" },
                                     { name: "Crimson Desire", inspired: "Desire Red", image: "images/10CrimsonDesireQuality.png" },
                                     
-                                    { name: "Azure Desire", inspired: "Desire Blue", image: "images/azure-desire.jpg" },
-                                    { name: "Azure Dolce", inspired: "D&G Light Blue", image: "images/azure-dolce.jpg" },
-                                    { name: "Blue Legend", inspired: "Blue Man", image: "images/blue-legend.jpg" },
-                                    { name: "Amethyst Oud", inspired: "Purple Oud", image: "images/amethyst-oud.jpg" },
-                                    { name: "Noir Cocoa", inspired: "Chanel Coco", image: "images/noir-cocoa.jpg" },
-                                    { name: "Urban Escape", inspired: "Burberry Weekend", image: "images/urban-escape.jpg" },
-                                    { name: "Bleu Essence", inspired: "Blue De Channel", image: "images/bleu-essence.jpg" },
-                                    { name: "Infinite Grace", inspired: "Eternity", image: "images/infinite-grace.jpg" },
-                                    { name: "Triumph", inspired: "Invictus", image: "images/triumph.jpg" }
+                                    { name: "Azudream", inspired: "Desire Blue", image: "images/11AzudreamQuality.png" },
+                                    { name: "Azurielle", inspired: "D&G Light Blue", image: "images/12AzurielleQuality.png" },
+                                    { name: "Bleuvara", inspired: "Blue De Channel", image: "images/13BleuvaraQuality.png" },
+
+                                    
+                                    { name: "Amethyst Oud", inspired: "Purple Oud", image: "images/14AmethystOudQuality.png" },
+                                    { name: "NoirCocoa", inspired: "Chanel Coco", image: "images/15NoirCocoaQuality.png" },
+                                    { name: "Urban Escape", inspired: "Burberry Weekend", image: "images/16UrbanEscapeQuality.png" },
+                                    
+                                    { name: "Exotique", inspired: "Chastity Women", image: "images/17ExotiqueQuality.png" },
+                                    { name: "Marench", inspired: "Sea Rose", image: "images/18MarenchQuality.png" },
+                                    { name: "Tropibliss", inspired: "Good Girl", image: "images/19TropiblissQuality.png" },
+                                    
+                                    { name: "Veloria", inspired: "Victoria Secret", image: "images/20VeloriaQuality.png" },
+                                    { name: "Fortuné", inspired: "One Million Lucky", image: "images/21FortunéQuality.png" }
                                     ];
                                     
                                     /* ✅ Luxury Perfumes */
                                     const luxuryPerfumes = [
-                                                            { name: "Marine Voyageur", inspired: "Nautica Voyage", image: "images/marine-voyageur.jpg" },
-                                                            { name: "Road Legend", inspired: "Harley Davidson", image: "images/road-legend.jpg" },
-                                                            { name: "Silver Pulse", inspired: "Chrome Azzaro", image: "images/silver-pulse.jpg" },
-                                                            { name: "Maison Élité", inspired: "Givenchy", image: "images/maison-elite.jpg" },
-                                                            { name: "Pure Oud Essence", inspired: "White Oud", image: "images/pure-oud-essence.jpg" }
+                                                            { name: "Marine Voyageur", inspired: "Nautica Voyage", image: "images/22MarineVoyageurQuality.png" },
+                                                            
+                                                            { name: "Road Legend", inspired: "Harley Davidson", image: "images/23RoadlegendQuality.png" },
+                                                            { name: "Pure Oud", inspired: "White Oud", image: "images/24PureOudQuality.png" }
                                                             ];
                                                             
+                                                            /*
+                                                             { name: "Silver Pulse", inspired: "Chrome Azzaro", image: "images/14NoirCocoaQuality.png" },
+                                                             { name: "Maison Élité", inspired: "Givenchy", image: "images/14NoirCocoaQuality.png" },
+
+                                                             */
+                                                            
                                                             /* ✅ Load Products */
-                                                            function loadProducts(list, containerId) {
+                                                            function loadProducts(list, containerId, price) {
                                                                 const container = document.getElementById(containerId);
-                                                                
+
                                                                 list.forEach(item => {
                                                                     const card = document.createElement("div");
                                                                     card.className = "card";
-                                                                    
+
                                                                     card.innerHTML = `
-              <img src="${item.image}" alt="${item.name}">
-              <h3>${item.name}</h3>
-              <small>Inspired from ${item.inspired}</small>
-              <p><strong>25 ML</strong></p>
-              <p>₹349</p>
-              <button onclick="addToCart('${item.name}', 349)">Add to Cart</button>
-            `;
-            
-            container.appendChild(card);
+                                                                        <img src="${item.image}" alt="${item.name}">
+                                                                        <h3>${item.name}</h3>
+                                                                        <small>Inspired from ${item.inspired}</small>
+                                                                        <p><strong>25 ML</strong></p>
+                                                                        <p>₹${price}</p>
+                                                                        <button onclick="addToCart('${item.name}', ${price})">Add to Cart</button>
+                                                                    `;
+
+                                                                    container.appendChild(card);
                                                                 });
                                                             }
             
-            loadProducts(frenchPerfumes, "products");
-            loadProducts(luxuryPerfumes, "luxuryProducts");
+            loadProducts(frenchPerfumes, "products", 349);     // French Perfumes ₹349
+            loadProducts(luxuryPerfumes, "luxuryProducts", 399); // Luxury Perfumes ₹399
+
+            
+            let autoSlideTimer;
+
+            function startAutoSlide() {
+                autoSlideTimer = setInterval(() => {
+                    next();
+                }, 5000); // 3.5 seconds
+            }
+
+            // start automatically when page loads
+            window.addEventListener("load", () => {
+                startAutoSlide();
+            });
+            
+            function resetAutoSlide() {
+                clearInterval(autoSlideTimer);
+                startAutoSlide();
+            }
+
+            
+            function go(i){
+                index = (i + images.length) % images.length;
+                slides.style.transform = `translateX(-${index * 100}%)`;
+                updateDots();
+                resetAutoSlide();   // 🔥 keeps auto running
+            }
+
+            function next(){
+                go(index + 1);
+            }
+
+            
+            let index = 0, timer;
+            const PRICE = 349; // change if needed
+
+            const images = sliderProducts.filter(p => p.image.endsWith("Quality.png"));
+            const slides = document.getElementById("slides");
+            const dotsWrap = document.getElementById("dots");
+
+            images.forEach((p, i) => {
+              const s = document.createElement("div");
+              s.className = "slide";
+              s.innerHTML = `
+                <img src="${p.image}" alt="${p.name}">
+                <div class="product-card">
+                  <h1>${p.name}</h1>
+                  <p>Inspired from ${p.inspired}</p>
+                  <p>Size: 25 ML</p>
+                  <div class="price">₹${PRICE}</div>
+                  <button onclick="addToCart('${p.name}', ${PRICE})">Add to Cart</button>
+                </div>
+              `;
+              slides.appendChild(s);
+
+              const d = document.createElement("div");
+              d.className = "dot";
+              d.onclick = () => go(i);
+              dotsWrap.appendChild(d);
+            });
+
+            function updateDots(){
+              [...dotsWrap.children].forEach((d,i)=>d.classList.toggle("active", i===index));
+            }
+            function go(i){
+              index = (i + images.length) % images.length;
+              slides.style.transform = `translateX(-${index*100}%)`;
+              updateDots();
+              reset();
+            }
+            function next(){ go(index+1); }
+
+            function start(){ timer = setInterval(next, 3500); }
+            function reset(){ clearInterval(timer); start(); }
+
+            updateDots(); start();
+
+            /* Swipe support */
+            let x0 = null;
+            slides.addEventListener("touchstart", e=>x0=e.touches[0].clientX);
+            slides.addEventListener("touchend", e=>{
+              if(x0===null) return;
+              let dx = e.changedTouches[0].clientX - x0;
+              if(dx > 50) go(index-1);
+              if(dx < -50) go(index+1);
+              x0 = null;
+            });
+
+            /* Pause on hover */
+            document.querySelector('.slider').addEventListener('mouseenter', ()=>clearInterval(timer));
+            document.querySelector('.slider').addEventListener('mouseleave', start);
         </script>
         
         
