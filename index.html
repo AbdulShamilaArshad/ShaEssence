@@ -1,550 +1,784 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Sha Essence Perfumes</title>
-                
-                <style>
-                    body {
-                        font-family: Arial, sans-serif;
-                        margin: 0;
-                        background: #1C3A33;
-                    }
-                    
-                    /* ================= HEADER ================= */
-                    header {
-                        background: #1C3A33;
-                        color: white;
-                        padding: 15px;
-                        text-align: center;
-                    }
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sha Essence Perfumes</title>
 
-                    /* ===== Full Screen Hero Slider ===== */
-                    /* ===== Half Screen Hero Slider (50%) ===== */
-                    .slider {
-                      position: relative;
-                      width: 100%;
-                      height: 50vh;          /* 🔥 50% screen height */
-                      background: #000;
-                      overflow: hidden;
-                      z-index: 1;
-                    }
+<style>
+body{margin:0;font-family:Arial;background:#1C3A33; padding-top: 114px; /* adjust based on menu height */}
+header{background:#1C3A33;color:#fff;text-align:center;padding:15px}
+.slider {
+  position: relative;
+  width: 100%;
+  height: 50vh;          /* 🔥 50% screen height */
+  background: #000;
+  overflow: hidden;
+  z-index: 1;
+}
 
 
-                    .slides {
-                      display: flex;
-                      height: 100%;
-                      transition: transform .9s cubic-bezier(.22,.61,.36,1);
-                    }
+.slides {
+  display: flex;
+  height: 100%;
+  transition: transform 2.5s cubic-bezier(.22,.61,.36,1);
+}
 
-                    .slide {
-                      min-width: 100%;
-                      height: 100%;
-                      position: relative;
-                    }
+.slide {
+  min-width: 100%;
+  height: 100%;
+  position: relative;
+}
 
-                    .slide img {
-                      width: 100%;
-                      height: 100%;
-                      object-fit: cover;
-                      transform: scale(1.04);
-                    }
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.04);
+}
+.slider::before{content:"";position:absolute;top:0;left:0;width:7%;/*🔥Leftareawidth*/height:100%;z-index:3;pointer-events:none;backdrop-filter:blur(100px);/*Mildblur*/-webkit-backdrop-filter:blur(100px);/*Smoothfadetonormal*/mask-image:linear-gradient(toright,rgba(1,1,1,1),rgba(1,1,1,1));}
 
-                    /* ===== Left Side Blur Overlay ===== */
-                    .slider::before {
-                      content: "";
-                      position: absolute;
-                      top: 0;
-                      left: 0;
-                      width: 7%;              /* 🔥 Left area width */
-                      height: 100%;
-                      z-index: 3;
-                      pointer-events: none;
-
-                      backdrop-filter: blur(100px);     /* Mild blur */
-                      -webkit-backdrop-filter: blur(100px);
-
-                      /* Smooth fade to normal */
-                      mask-image: linear-gradient(
-                        to right,
-                        rgba(1,1,1,1),
-                        rgba(1,1,1,1)
-                      );
-                    }
-                    
-                    /* ===== Right Side Blur Overlay ===== */
-                    .slider::after {
-                      content: "";
-                      position: absolute;
-                      top: 0;
-                      right: 0;
-                      width: 7%;               /* 🔥 Right blur width */
-                      height: 100%;
-                      z-index: 3;
-                      pointer-events: none;
-
-                      backdrop-filter: blur(100px);     /* Mild blur */
-                      -webkit-backdrop-filter: blur(100px);
-
-                      /* Smooth fade to normal */
-                      mask-image: linear-gradient(
-                        to right,
-                        rgba(1,1,1,1),
-                        rgba(1,1,1,1)
-                      );
-                    }
+.slider::after{content:"";position:absolute;top:0;right:0;width:7%;/*🔥Rightblurwidth*/height:100%;z-index:3;pointer-events:none;backdrop-filter:blur(100px);/*Mildblur*/-webkit-backdrop-filter:blur(100px);/*Smoothfadetonormal*/mask-image:linear-gradient(toright,rgba(1,1,1,1),rgba(1,1,1,1));}
 
 
 
+.product-card{position:absolute;left:8%;bottom:14%;width:80%;height:70%;padding:22px;color:#fff;
+background:rgba(0,0,0,.35);border:1px solid rgba(212,175,55,.4);border-radius:16px}
+.product-card h1{margin:0;font-size:42px}
+.product-card .price{color:#d4af37;font-size:28px;font-weight:700}
+.product-card button{cursor: pointer; /* 👆 Hand cursor */background:#d4af37;border:none;padding:12px 20px;font-weight:bold;border-radius:8px}
 
-                    /* ===== Product Glass Card ===== */
-                    .product-card {
-                      position: absolute;
-                      left: 8%;
-                      bottom: 14%;
-                      z-index: 2;
-                      width: 80%;
-                      height: 70%;
-                      padding: 22px 24px;
-                      color: #fff;
-                      border-radius: 16px;
-                      backdrop-filter: blur(2px);
-                      background: rgba(0,0,0,.35);
-                      border: 1px solid rgba(212,175,55,.35);
-                      box-shadow: 0 20px 60px rgba(0,0,0,.45);
-                      animation: rise .9s ease both;
-                    }
+.dots{position:absolute;bottom:20px;width:100%;display:flex;justify-content:center;gap:10px}
+.dot{width:10px;height:10px;border-radius:50%;background:#aaa;cursor:pointer}
+.dot.active{background:#d4af37}
 
-                    @keyframes rise {
-                      from { transform: translateY(24px); opacity: 0 }
-                      to   { transform: translateY(0);   opacity: 1 }
-                    }
+.container{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;padding:20px}
+.card{background:#fff;border-radius:8px;padding:15px;text-align:center}
+.card img{width:100%;height:200px;object-fit:cover}
+.card button {
+    background: #d4af37;  /* gold color */
+    color: black;
+    border: none;
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+.card button:hover {
+    background: #b8952a; /* slightly darker gold on hover */
+}
 
-                    .product-card h1 {
-                      margin: 0 0 8px;
-                      font-size: 42px;
-                      letter-spacing: .5px;
-                    }
+.section-title{color:#fff;padding:10px 20px;font-size:20px;font-weight:bold}
 
-                    .product-card p {
-                      margin: 6px 0;
-                      opacity: .9;
-                    }
+.grand-menu{background:#102822;position:sticky;top:0;z-index:9;padding:12px}
+.menu-row{display:flex;justify-content:center;gap:30px;flex-wrap:wrap}
+.menu-group{display:flex;gap:10px;align-items:center}
+.menu-group span{color:#d4af37;font-size:12px}
+.menu-group button{background:transparent;border:1px solid rgba(212,175,55,.5);color:#fff;
+padding:6px 14px;border-radius:20px;cursor:pointer}
+.menu-group button.active{background:#d4af37;color:#000}
 
-                    .product-card .price {
-                      margin-top: 10px;
-                      font-size: 28px;
-                      font-weight: 700;
-                      color: #d4af37;
-                    }
-
-                    .product-card button {
-                      margin-top: 16px;
-                      padding: 12px 22px;
-                      border-radius: 10px;
-                      border: none;
-                      font-weight: 800;
-                      background: #d4af37;
-                      color: #000;
-                      cursor: pointer;
-                    }
-
-                    /* ===== Dots ===== */
-                    .dots {
-                      position: absolute;
-                      bottom: 24px;
-                      width: 100%;
-                      display: flex;
-                      justify-content: center;
-                      gap: 10px;
-                      z-index: 5;
-                    }
-                    .dot {
-                      width: 10px; height: 10px;
-                      border-radius: 50%;
-                      background: rgba(255,255,255,.4);
-                      cursor: pointer;
-                    }
-                    .dot.active { background: #d4af37; }
-
-                    
-                    /* Buttons on product cards */
-                    .card button {
-                        background: #d4af37;  /* gold color */
-                        color: black;
-                        border: none;
-                        padding: 10px;
-                        margin-top: 10px;
-                        cursor: pointer;
-                        font-weight: bold;
-                        transition: background 0.3s ease;
-                    }
-                    .card button:hover {
-                        background: #b8952a; /* slightly darker gold on hover */
-                    }
-                    
-                    
-                    
-                    footer {
-                        background: #1C3A33;
-                        color: white;
-                        text-align: center;
-                        padding: 10px;
-                    }
-                    
-                    
-                    .container {
-                        display: grid;
-                        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-                        gap: 20px;
-                        padding: 20px;
-                    }
-                    .card {
-                        background: white;
-                        border-radius: 8px;
-                        padding: 15px;
-                        text-align: center;
-                    }
-                    .card img {
-                        width: 100%;
-                        height: 200px;
-                        object-fit: cover;
-                    }
-                    
-                    .cart {
-                        background: white;
-                        padding: 20px;
-                        margin: 20px;
-                        border-radius: 8px;
-                    }
-                    .cart li {
-                        display: flex;
-                        justify-content: space-between;
-                        padding: 10px 0;
-                        border-bottom: 1px dashed #ddd;
-                        font-size: 15px;
-                        color: #333;
-                    }
-                    
-                    .cart li strong {
-                        color: #000;
-                    }
-                    
-                    
-                    .cart-item-right {
-                        display: flex;
-                        align-items: center;
-                        gap: 10px;
-                    }
-                    
-                    .cart-price {
-                        font-weight: bold;
-                    }
-                    
-                    /* Remove icon style */
-                    .remove-icon {
-                        color: #d4af37; /* gold */
-                        cursor: pointer;
-                        font-size: 16px;
-                        transition: color 0.3s ease;
-                    }
-                    
-                    .remove-icon:hover {
-                        color: #b8952a;
-                    }
-                    
-                    
-                    .section-title {
-                        color: #f7f7f7; /* White */
-                        padding: 10px 20px;
-                        font-size: 20px;
-                        font-weight: bold;
-                    }
-                    
-                    .whatsapp-float {
-                        position: fixed;
-                        bottom: 20px;
-                        right: 20px;
-                        z-index: 1000;
-                        cursor: pointer;
-                    }
-                    
-                    
-                </style>
-            </head>
+.cart{background:#fff;margin:20px;padding:20px;border-radius:8px}
+.remove-icon{cursor:pointer;color:#FF7F7F}
+.whatsapp-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    cursor: pointer;
+}
     
+    .cart-item-right {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
 
+    .cart-qty {
+        font-weight: bold;
+        min-width: 18px;
+        text-align: center;
+    }
+
+    /* ===== CART ALIGNMENT ===== */
+    #cartItems {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    #cartItems li {
+        display: grid;
+        grid-template-columns: 1fr auto auto auto;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px dashed #ddd;
+        font-size: 14px;
+    }
+
+    /* Product name */
+    .cart-name {
+        font-weight: 600;
+        color: #000;
+    }
+
+    /* Quantity controls */
+    .cart-qty-box {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    /* Quantity number */
+    .cart-qty {
+        min-width: 20px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    /* Qty buttons */
+    .qty-btn {
+        width: 26px;
+        height: 26px;
+        border-radius: 6px;
+        border: none;
+        background: #102822;
+        color: #d4af37;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .qty-btn:hover {
+        background: #1c3a33;
+    }
+
+    /* Price */
+    .cart-price {
+        font-weight: bold;
+        min-width: 60px;
+        text-align: right;
+    }
+
+    /* Remove icon */
+    .remove-icon {
+        cursor: pointer;
+        color: #d4af37;
+        font-size: 16px;
+    }
+
+    .remove-icon:hover {
+        color: #b8952a;
+    }
+
+    .cart-price {
+        font-weight: bold;
+        min-width: 70px;
+        text-align: right;
+        white-space: nowrap;
+    }
+
+    /* FIXED HEADER WRAPPER */
+    .fixed-header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 9999;
+    }
+
+    /* LOGO STRIP */
+    .logo-strip {
+        background: #1C3A33;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 14px 10px;
+        border-bottom: 1px solid rgba(212,175,55,.25);
+    }
+
+    .brand-logo {
+        height: 56px;
+    }
+
+    .brand-text h2 {
+        margin: 0;
+        color: #fff;
+        font-size: 26px;
+    }
+
+    .brand-text p {
+        margin: -4px 0 0;
+        color: #d4af37;
+        font-size: 11px;
+        letter-spacing: 1px;
+    }
+
+    /* GRAND MENU */
+    .grand-menu {
+        background: #102822;
+        padding: 12px 10px;
+        border-bottom: 1px solid rgba(212,175,55,.35);
+    }
+
+    /* MENU STYLES (your existing ones) */
+    .menu-row {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        flex-wrap: wrap;
+    }
+
+    .menu-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .menu-group span {
+        color: #d4af37;
+        font-size: 12px;
+    }
+
+    .menu-group button {
+        background: transparent;
+        border: 1px solid rgba(212,175,55,.5);
+        color: #fff;
+        padding: 6px 14px;
+        border-radius: 20px;
+        cursor: pointer;
+    }
+
+    .menu-group button.active {
+        background: #d4af37;
+        color: #000;
+    }
+
+    .space-top {
+        margin-top: 10px;
+    }
+
+</style>
+</head>
+
+
+
+
+<body>
     
-    <body>
-        
-        <a href="#" onclick="sendWhatsAppOrder()" class="whatsapp-float">
-            <img src="images/whatsapp.png"
-                 alt="WhatsApp"
-                 style="width:55px;height:55px;">
-        </a>
-        
-        <header style="background: #1C3A33; padding: 15px; text-align: center;">
-          <img src="images/ShaEssenceOnly.png" alt="Sha Essence Logo"
-               style="height: 50px; vertical-align: middle; margin-right: 10px;margin-top: 10px;">
-          <span style="color: white; font-size: 28px; margin-left: -24px;font-weight: bold; vertical-align: middle;">
-            Sha Essence
-          </span>
-          <p style="color: #D4AF37; margin-top: -15px; margin-left: 50px; font-size: 10px; letter-spacing: 1px;">
-            Unveil the Power of Aroma
-          </p>
-          <p style="color: white;  margin-left: 20px; margin-top: 5px;">French & Luxury Perfumes</p>
-        </header>
-        
+    <!-- FIXED HEADER WRAPPER -->
+    <div class="fixed-header">
 
-        <div class="slider">
-          <div class="slides" id="slides"></div>
-          <div class="dots" id="dots"></div>
+      <!-- LOGO AREA -->
+      <div class="logo-strip">
+        <img src="images/ShaEssenceOnly.PNG" class="brand-logo" alt="Sha Essence">
+        <div class="brand-text">
+            <span style="color: white; font-size: 28px; margin-left: -24px;font-weight: bold; vertical-align: middle;">
+              Sha Essence
+            </span>
+            <p style="color: #D4AF37;  margin-top: 2px; margin-left: -10px; font-size: 10px; letter-spacing: 1px;">
+              Unveil the Power of Aroma
+            </p>
+            <p style="color: white;  margin-left: -10px; margin-top: 5px;">French & Luxury Perfumes</p>
         </div>
-        
-        <div class="section-title">🌿 French Perfumes (25 ML)</div>
-        <section class="container" id="products"></section>
-        
-        <div class="section-title">💎 Luxury Perfumes (25 ML)</div>
-        <section class="container" id="luxuryProducts"></section>
-        
-        <div class="cart">
-            <h2>🛒 Cart</h2>
-            <ul id="cartItems"></ul>
-            <h3>Total: ₹<span id="total">0</span></h3>
-        </div>
-        
-        <footer>
-            <p>© 2026 Sha Essence Fragrances</p>
-        </footer>
-        
-        <script>
-            
-            
-            const sliderProducts = [
-                { name: "Jannatul Firdaus", inspired: "Jannatul Firdaus", image: "images/1JannatulFirdausQuality.png" },
-                { name: "Victory Seven", inspired: "CR7", image: "images/2VictorySevenQuality.png" },
-                { name: "Bold Executive", inspired: "Hugo Boss", image: "images/6BoldExecutiveQuality.png" },
-                { name: "Ocean Azure", inspired: "Cool Water Blue", image: "images/7BlueCurrentQuality.png" },
-                { name: "Velora", inspired: "Escada", image: "images/5VeloraQuality.png" },
-                { name: "Royal Ascent", inspired: "Creed Aventus", image: "images/4RoyalAscentQuality.png" },
-                { name: "Arabian Veil", inspired: "Sabaya", image: "images/3ArabianVeilQuality.png" },
-                { name: "Elite Sport", inspired: "Polo Sport", image: "images/9EliteSportQuality.png" },
-                { name: "Black Signature", inspired: "Classic Black", image: "images/8BlackSignatureQuality.png" },
-                { name: "Crimson Desire", inspired: "Desire Red", image: "images/10CrimsonDesireQuality.png" },
-                { name: "Azudream", inspired: "Desire Blue", image: "images/11AzudreamQuality.png" },
-                { name: "Azurielle", inspired: "D&G Light Blue", image: "images/12AzurielleQuality.png" }
-            ];
-            
+      </div>
 
-            
-            
-            let total = 0;
-            
-            const phoneNumber = "919487860718";
-            
-            function sendWhatsAppOrder() {
-                const cartItems = document.querySelectorAll("#cartItems li");
+      <!-- GRAND MENU (BELOW LOGO) -->
+      <div class="grand-menu">
+        <div class="menu-row">
 
-                if (cartItems.length === 0) {
-                    alert("Your cart is empty");
-                    return;
-                }
+          <div class="menu-group">
+            <span>Category</span>
+            <button class="active" onclick="setCategory('all',this)">All</button>
+            <button onclick="setCategory('french',this)">French</button>
+            <button onclick="setCategory('luxury',this)">Luxury</button>
+          </div>
 
-                let message = "🛍️ *Sha Essence Order*%0A%0A";
-
-                cartItems.forEach(item => {
-                    message += "• " + item.innerText.replace("✖", "").trim() + "%0A";
-                });
-
-                message += "%0A💰 *Total:* ₹" + total;
-
-                const url = `https://wa.me/${phoneNumber}?text=${message}`;
-
-                window.open(url, "_blank");
-            }
-            
-            function addToCart(name, price) {
-                const cartItems = document.getElementById("cartItems");
-                const li = document.createElement("li");
-                
-                li.innerHTML = `
-            <span>${name} - ₹${price}</span>
-            <span class="remove-icon" onclick="removeItem(this, ${price})">✖</span>
-          `;
+          <div class="menu-group">
+            <span>Size</span>
+            <button onclick="setML(3,this)">3 ML</button>
+            <button onclick="setML(6,this)">6 ML</button>
+            <button onclick="setML(9,this)">9 ML</button>
+            <button onclick="setML(12,this)">12 ML</button>
+            <button class="active" onclick="setML(25,this)">25 ML</button>
+            <button onclick="setML(50,this)">50 ML</button>
+            <button onclick="setML(100,this)">100 ML</button>
+          </div>
           
-          cartItems.appendChild(li);
-          total += price;
-          document.getElementById("total").innerText = total;
-            }
-            
-            function removeItem(icon, price) {
-                icon.parentElement.remove();
-                total -= price;
-                document.getElementById("total").innerText = total;
-            }
-            
-            /* ✅ French Perfumes */
-            const frenchPerfumes = [
-                                    { name: "Jannatul Firdaus", inspired: "Jannatul Firdaus", image: "images/1JannatulFirdausQuality.png" },
-                                    { name: "Victory Seven", inspired: "CR7", image: "images/2VictorySevenQuality.png" },
-                                    { name: "Bold Executive", inspired: "Hugo Boss", image: "images/6BoldExecutiveQuality.png" },
-                                    { name: "Blue Current", inspired: "Cool Water Blue", image: "images/7BlueCurrentQuality.png" },
-                                    { name: "Velora", inspired: "Escada", image: "images/5VeloraQuality.png" },
-                                    { name: "Royal Ascent", inspired: "Creed Aventus", image: "images/4RoyalAscentQuality.png" },
-                                    { name: "Arabian Veil", inspired: "Sabaya", image: "images/3ArabianVeilQuality.png" },
-                                    { name: "Elite Sport", inspired: "Polo Sport", image: "images/9EliteSportQuality.png" },
-                                    { name: "Black Signature", inspired: "Classic Black", image: "images/8BlackSignatureQuality.png" },
-                                    { name: "Crimson Desire", inspired: "Desire Red", image: "images/10CrimsonDesireQuality.png" },
-                                    
-                                    { name: "Azudream", inspired: "Desire Blue", image: "images/11AzudreamQuality.png" },
-                                    { name: "Azurielle", inspired: "D&G Light Blue", image: "images/12AzurielleQuality.png" },
-                                    { name: "Bleuvara", inspired: "Blue De Channel", image: "images/13BleuvaraQuality.png" },
+          <div class="menu-group">
+            <span>Car Size</span>
+            <button onclick="setCarML(8,this)">8 ML</button>
+            <button class="active" onclick="setCarML(10,this)">10 ML</button>
+          </div>
 
-                                    
-                                    { name: "Amethyst Oud", inspired: "Purple Oud", image: "images/14AmethystOudQuality.png" },
-                                    { name: "NoirCocoa", inspired: "Chanel Coco", image: "images/15NoirCocoaQuality.png" },
-                                    { name: "Urban Escape", inspired: "Burberry Weekend", image: "images/16UrbanEscapeQuality.png" },
-                                    
-                                    { name: "Exotique", inspired: "Chastity Women", image: "images/17ExotiqueQuality.png" },
-                                    { name: "Marench", inspired: "Sea Rose", image: "images/18MarenchQuality.png" },
-                                    { name: "Tropibliss", inspired: "Good Girl", image: "images/19TropiblissQuality.png" },
-                                    
-                                    { name: "Veloria", inspired: "Victoria Secret", image: "images/20VeloriaQuality.png" },
-                                    { name: "Fortuné", inspired: "One Million Lucky", image: "images/21FortuneQuality.png" }
-                                    ];
-                                    
-                                    /* ✅ Luxury Perfumes */
-                                    const luxuryPerfumes = [
-                                                            { name: "Marine Voyageur", inspired: "Nautica Voyage", image: "images/22MarineVoyageurQuality.png" },
-                                                            
-                                                            { name: "Road Legend", inspired: "Harley Davidson", image: "images/23RoadlegendQuality.png" },
-                                                            { name: "Pure Oud", inspired: "White Oud", image: "images/24WhiteOudQuality.png" },
-                                                            { name: "Luxflame", inspired: "Eros Flame", image: "images/25LuxflameQuality.png" }
-                                                            ];
-                                                            
-                                                            /*
-                                                             { name: "Silver Pulse", inspired: "Chrome Azzaro", image: "images/14NoirCocoaQuality.png" },
-                                                             { name: "Maison Élité", inspired: "Givenchy", image: "images/14NoirCocoaQuality.png" },
 
-                                                             */
-                                                            
-                                                            /* ✅ Load Products */
-                                                            function loadProducts(list, containerId, price) {
-                                                                const container = document.getElementById(containerId);
+        </div>
+      </div>
 
-                                                                list.forEach(item => {
-                                                                    const card = document.createElement("div");
-                                                                    card.className = "card";
+    </div>
 
-                                                                    card.innerHTML = `
-                                                                        <img src="${item.image}" alt="${item.name}">
-                                                                        <h3>${item.name}</h3>
-                                                                        <small>Inspired from ${item.inspired}</small>
-                                                                        <p><strong>25 ML</strong></p>
-                                                                        <p>₹${price}</p>
-                                                                        <button onclick="addToCart('${item.name}', ${price})">Add to Cart</button>
-                                                                    `;
 
-                                                                    container.appendChild(card);
-                                                                });
-                                                            }
-            
-            loadProducts(frenchPerfumes, "products", 349);     // French Perfumes ₹349
-            loadProducts(luxuryPerfumes, "luxuryProducts", 399); // Luxury Perfumes ₹399
+<header>
+    
+    <a href="#" onclick="sendWhatsAppOrder()" class="whatsapp-float">
+        <img src="images/whatsapp.png"
+             alt="WhatsApp"
+             style="width:55px;height:55px;">
+    </a>
+    
+</header>
 
-            
-            let autoSlideTimer;
+<div class="slider">
+<div class="slides" id="slides"></div>
+<div class="dots" id="dots"></div>
+</div>
 
-            function startAutoSlide() {
-                autoSlideTimer = setInterval(() => {
-                    next();
-                }, 5000); // 3.5 seconds
-            }
+<div class="section-title space-top" id="frenchTitle" ; >🌿 French Perfumes (25 ML)</div>
+<section class="container" id="products"></section>
 
-            // start automatically when page loads
-            window.addEventListener("load", () => {
-                startAutoSlide();
-            });
-            
-            function resetAutoSlide() {
-                clearInterval(autoSlideTimer);
-                startAutoSlide();
-            }
+<div class="section-title" id="luxuryTitle">💎 Luxury Perfumes (25 ML)</div>
+<section class="container" id="luxuryProducts"></section>
 
-            
-            function go(i){
-                index = (i + images.length) % images.length;
-                slides.style.transform = `translateX(-${index * 100}%)`;
-                updateDots();
-                resetAutoSlide();   // 🔥 keeps auto running
-            }
+<div class="section-title" id="carTitle">🚗 Car Perfumes (8 ML)</div>
+<section class="container" id="carProducts"></section>
 
-            function next(){
-                go(index + 1);
-            }
 
-            
-            let index = 0, timer;
-            const PRICE = 349; // change if needed
+<div class="cart">
+<h3>🛒 Cart</h3>
+<ul id="cartItems"></ul>
+<h3>Total ₹<span id="total">0</span></h3>
+</div>
 
-            const images = sliderProducts.filter(p => p.image.endsWith("Quality.png"));
-            const slides = document.getElementById("slides");
-            const dotsWrap = document.getElementById("dots");
+<script>
+const eightMLcarPerfumes = [
+  { name: "Aqua", inspired: "Ocean Breeze", image: "images/Car/Aqua8ml.png" },
+  { name: "Sandal", inspired: "Sandalwood", image: "images/Car/Sandal8ml.png" },
+  { name: "Vanilla", inspired: "Sweet Vanilla", image: "images/Car/Vanilla8ml.png" },
+  { name: "Orange", inspired: "Orange", image: "images/Car/Orange8ml.png" },
+  { name: "Bubble Gum", inspired: "Bubble Gum", image: "images/Car/BubbleGum8ml.png" }
+];
 
-            images.forEach((p, i) => {
-              const s = document.createElement("div");
-              s.className = "slide";
-              s.innerHTML = `
-                <img src="${p.image}" alt="${p.name}">
-                <div class="product-card">
-                  <h1>${p.name}</h1>
-                  <p>Inspired from ${p.inspired}</p>
-                  <p>Size: 25 ML</p>
-                  <div class="price">₹${PRICE}</div>
-                  <button onclick="addToCart('${p.name}', ${PRICE})">Add to Cart</button>
+const tenMLcarPerfumes = [
+  { name: "Aqua", inspired: "Ocean Breeze", image: "images/Car/Aqua10ml.jpg" },
+  { name: "Sandal", inspired: "Sandalwood", image: "images/Car/Sandal10ml.jpg" },
+  { name: "Vanilla", inspired: "Sweet Vanilla", image: "images/Car/Vanilla10ml.jpg" },
+  { name: "Orange", inspired: "Orange", image: "images/Car/Orange10ml.jpg" },
+  { name: "Bubble Gum", inspired: "Bubble Gum", image: "images/Car/BubbleGum10ml.jpg" }
+];
+
+const carPrices = {
+  8: 180,
+  10: 220
+};
+
+let currentCarML = 10;
+</script>
+
+
+<script>
+function loadCarPerfumes() {
+  const container = document.getElementById("carProducts");
+  container.innerHTML = "";
+  
+  if(currentCarML == 8){
+      eightMLcarPerfumes.forEach(item => {
+        container.innerHTML += `
+          <div class="card">
+            <img src="${item.image}">
+            <h3>${item.name}</h3>
+            <small>${item.inspired}</small>
+            <p><strong>${currentCarML} ML</strong></p>
+            <p>₹${carPrices[currentCarML]}</p>
+            <button onclick="addToCart('${item.name} (${currentCarML} ML)', ${carPrices[currentCarML]})">
+              Add to Cart
+            </button>
+          </div>
+        `;
+      });
+  }else{
+      tenMLcarPerfumes.forEach(item => {
+        container.innerHTML += `
+          <div class="card">
+            <img src="${item.image}">
+            <h3>${item.name}</h3>
+            <small>${item.inspired}</small>
+            <p><strong>${currentCarML} ML</strong></p>
+            <p>₹${carPrices[currentCarML]}</p>
+            <button onclick="addToCart('${item.name} (${currentCarML} ML)', ${carPrices[currentCarML]})">
+              Add to Cart
+            </button>
+          </div>
+        `;
+      });
+  }
+
+  document.getElementById("carTitle").innerText =
+    `🚗 Car Perfumes (${currentCarML} ML)`;
+}
+</script>
+
+<script>
+function setCarML(ml, btn) {
+  currentCarML = ml;
+  btn.parentElement.querySelectorAll("button")
+     .forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  loadCarPerfumes();
+}
+</script>
+
+<script>
+loadCarPerfumes();
+</script>
+
+
+<script>
+/* ---------- DATA ---------- */
+
+
+const sliderFrenchLuxury = [
+ {name:"Jannatul Firdaus", inspired:"Jannatul Firdaus", image:"images/1JannatulFirdausQuality.png"},
+ {name:"Victory Seven", inspired:"CR7", image:"images/2VictorySevenQuality.png"},
+ {name:"Bold Executive", inspired:"Hugo Boss", image:"images/6BoldExecutiveQuality.png"},
+ {name:"Marine Voyageur", inspired:"Nautica Voyage", image:"images/22MarineVoyageurQuality.png"},
+ {name:"Road Legend", inspired:"Harley Davidson", image:"images/23RoadlegendQuality.png"}
+];
+
+    
+const sliderFrench = [
+ {name:"Jannatul Firdaus", inspired:"Jannatul Firdaus", image:"images/1JannatulFirdausQuality.png"},
+ {name:"Victory Seven", inspired:"CR7", image:"images/2VictorySevenQuality.png"},
+ {name:"Bold Executive", inspired:"Hugo Boss", image:"images/6BoldExecutiveQuality.png"}
+];
+
+const sliderLuxury = [
+ {name:"Marine Voyageur", inspired:"Nautica Voyage", image:"images/22MarineVoyageurQuality.png"},
+ {name:"Road Legend", inspired:"Harley Davidson", image:"images/23RoadlegendQuality.png"}
+];
+
+
+let sliderTimer;
+
+function startAutoSlider(){
+ clearInterval(sliderTimer);
+ sliderTimer = setInterval(()=>{
+   const slidesCount = dots.children.length;
+   if(slidesCount === 0) return;
+   index = (index + 1) % slidesCount;
+   go(index);
+ },5000);
+}
+
+    startAutoSlider();
+
+    document.querySelector(".slider").addEventListener("mouseenter",()=>{
+        clearInterval(sliderTimer);
+    });
+
+    document.querySelector(".slider").addEventListener("mouseleave",()=>{
+        startAutoSlider();
+    });
+
+
+/* ✅ French Perfumes */
+const frenchPerfumes = [
+                        { name: "Jannatul Firdaus", inspired: "Jannatul Firdaus", image: "images/1JannatulFirdausQuality.png" },
+                        { name: "Victory Seven", inspired: "CR7", image: "images/2VictorySevenQuality.png" },
+                        { name: "Bold Executive", inspired: "Hugo Boss", image: "images/6BoldExecutiveQuality.png" },
+                        { name: "Blue Current", inspired: "Cool Water Blue", image: "images/7BlueCurrentQuality.png" },
+                        { name: "Velora", inspired: "Escada", image: "images/5VeloraQuality.png" },
+                        { name: "Royal Ascent", inspired: "Creed Aventus", image: "images/4RoyalAscentQuality.png" },
+                        { name: "Arabian Veil", inspired: "Sabaya", image: "images/3ArabianVeilQuality.png" },
+                        { name: "Elite Sport", inspired: "Polo Sport", image: "images/9EliteSportQuality.png" },
+                        { name: "Black Signature", inspired: "Classic Black", image: "images/8BlackSignatureQuality.png" },
+                        { name: "Crimson Desire", inspired: "Desire Red", image: "images/10CrimsonDesireQuality.png" },
+                        
+                        { name: "Azudream", inspired: "Desire Blue", image: "images/11AzudreamQuality.png" },
+                        { name: "Azurielle", inspired: "D&G Light Blue", image: "images/12AzurielleQuality.png" },
+                        { name: "Bleuvara", inspired: "Blue De Channel", image: "images/13BleuvaraQuality.png" },
+
+                        
+                        { name: "Amethyst Oud", inspired: "Purple Oud", image: "images/14AmethystOudQuality.png" },
+                        { name: "NoirCocoa", inspired: "Chanel Coco", image: "images/15NoirCocoaQuality.png" },
+                        { name: "Urban Escape", inspired: "Burberry Weekend", image: "images/16UrbanEscapeQuality.png" },
+                        
+                        { name: "Exotique", inspired: "Chastity Women", image: "images/17ExotiqueQuality.png" },
+                        { name: "Marench", inspired: "Sea Rose", image: "images/18MarenchQuality.png" },
+                        { name: "Tropibliss", inspired: "Good Girl", image: "images/19TropiblissQuality.png" },
+                        
+                        { name: "Veloria", inspired: "Victoria Secret", image: "images/20VeloriaQuality.png" },
+                        { name: "Fortuné", inspired: "One Million Lucky", image: "images/21FortunéQuality.png" }
+                        ];
+                        
+/* ✅ Luxury Perfumes */
+const luxuryPerfumes = [
+                        { name: "Marine Voyageur", inspired: "Nautica Voyage", image: "images/22MarineVoyageurQuality.png" },
+                        { name: "Road Legend", inspired: "Harley Davidson", image: "images/23RoadlegendQuality.png" },
+                        { name: "White Oud", inspired: "White Oud", image: "images/24WhiteOudQuality.png" },
+                        { name: "Luxflame", inspired: "Eros Flame", image: "images/25LuxflameQuality.png" }
+                        ];
+
+const prices={
+3:{french:50,luxury:60},
+6:{french:100,luxury:120},
+9:{french:150,luxury:170},
+12:{french:180,luxury:200},
+25:{french:350,luxury:400},
+50:{french:650,luxury:750},
+100:{french:1300,luxury:1400}
+};
+
+let currentML=25;
+let currentCategory="all";
+let total=0;
+
+
+
+/* ---------- LOAD PRODUCTS ---------- */
+function loadProducts(list,containerId,price){
+const c=document.getElementById(containerId);
+c.innerHTML="";
+list.forEach(p=>{
+c.innerHTML+=`
+<div class="card">
+<img src="${p.image}">
+<h3>${p.name}</h3>
+<small>Inspired from ${p.inspired}</small>
+<p><strong>${currentML} ML</strong></p>
+<p>₹${price}</p>
+<button onclick="addToCart('${p.name} (${currentML} ML)',${price})">Add to Cart</button>
+</div>`;
+});
+}
+
+/* ---------- FILTER ---------- */
+    function filter(){
+
+    /* ===== FRENCH ===== */
+    if(currentCategory === "all" || currentCategory === "french"){
+        loadProducts(frenchPerfumes, "products", prices[currentML].french);
+        document.getElementById("products").style.display = "grid";
+        document.getElementById("frenchTitle").style.display = "block";
+        document.getElementById("frenchTitle").innerText =
+            `🌿 French Perfumes (${currentML} ML)`;
+    }else{
+        document.getElementById("products").style.display = "none";
+        document.getElementById("frenchTitle").style.display = "none";
+    }
+
+    /* ===== LUXURY ===== */
+    if(currentCategory === "all" || currentCategory === "luxury"){
+        loadProducts(luxuryPerfumes, "luxuryProducts", prices[currentML].luxury);
+        document.getElementById("luxuryProducts").style.display = "grid";
+        document.getElementById("luxuryTitle").style.display = "block";
+        document.getElementById("luxuryTitle").innerText =
+            `💎 Luxury Perfumes (${currentML} ML)`;
+    }else{
+        document.getElementById("luxuryProducts").style.display = "none";
+        document.getElementById("luxuryTitle").style.display = "none";
+    }
+
+    /* ===== SLIDER ===== */
+    renderSlider();
+    startAutoSlider();
+    }
+
+/* ---------- MENU ---------- */
+function setML(ml,btn){
+currentML=ml;
+document.querySelectorAll(".menu-group:nth-child(2) button").forEach(b=>b.classList.remove("active"));
+btn.classList.add("active");
+filter();
+}
+
+function setCategory(cat,btn){
+currentCategory=cat;
+document.querySelectorAll(".menu-group:nth-child(1) button").forEach(b=>b.classList.remove("active"));
+btn.classList.add("active");
+filter();
+}
+
+/* ---------- SLIDER ---------- */
+const slides=document.getElementById("slides");
+const dots=document.getElementById("dots");
+let index=0;
+
+
+function renderSlider(){
+ slides.innerHTML="";
+ dots.innerHTML="";
+
+ let sliderList = [];
+ let price = 0;
+ 
+
+ if(currentCategory === "luxury"){
+   sliderList = sliderLuxury;
+   price = prices[currentML].luxury;
+ }
+ else  if(currentCategory === "french") {
+   sliderList = sliderFrench;
+   price = prices[currentML].french;
+ }
+ else  {
+     sliderList = sliderFrenchLuxury;
+     price = prices[currentML].french;
+ }
+
+ sliderList.forEach((p,i)=>{
+   slides.innerHTML += `
+   <div class="slide">
+     <img src="${p.image}">
+     <div class="product-card">
+       <h1>${p.name}</h1>
+       <p>Inspired from ${p.inspired}</p>
+       <p>Size: ${currentML} ML</p>
+       <div class="price">₹${price}</div>
+       <button onclick="addToCart('${p.name} (${currentML} ML)',${price})">
+         Add to Cart
+       </button>
+     </div>
+   </div>
+   `;
+
+   const d=document.createElement("div");
+   d.className="dot";
+   d.onclick=()=>go(i);
+   dots.appendChild(d);
+ });
+
+ index = 0;
+ updateDots();
+ go(0);
+}
+
+
+function go(i){
+index=i;
+slides.style.transform=`translateX(-${i*100}%)`;
+updateDots();
+}
+
+function updateDots(){
+[...dots.children].forEach((d,i)=>d.classList.toggle("active",i===index));
+}
+
+/* ---------- INIT ---------- */
+filter();
+
+renderSlider();
+startAutoSlider();
+
+
+const phoneNumber = "919487860718";
+
+function sendWhatsAppOrder() {
+    const cartItems = document.querySelectorAll("#cartItems li");
+
+    if (cartItems.length === 0) {
+        alert("Your cart is empty");
+        return;
+    }
+
+    let message = "🛍️ *Sha Essence Order*%0A%0A";
+
+    cartItems.forEach(item => {
+        message += "• " + item.innerText.replace("✖", "").trim() + "%0A";
+    });
+
+    message += "%0A💰 *Total:* ₹" + total;
+
+    const url = `https://wa.me/${phoneNumber}?text=${message}`;
+
+    window.open(url, "_blank");
+}
+
+    function addToCart(name, price, qty = 1) {
+        qty = parseInt(qty);
+        const cart = document.getElementById("cartItems");
+        const key = name; // name already includes ML
+        let item = cart.querySelector(`[data-key="${key}"]`);
+
+        if (item) {
+            // Item already exists → increase qty
+            let qtyEl = item.querySelector(".cart-qty");
+            let currentQty = parseInt(qtyEl.innerText);
+            currentQty += qty;
+            qtyEl.innerText = currentQty;
+
+            let priceEl = item.querySelector(".cart-price");
+            priceEl.innerText = currentQty * price;
+
+            total += qty * price;
+        } else {
+            // New item
+            const li = document.createElement("li");
+            li.setAttribute("data-key", key);
+            li.setAttribute("data-price", price);
+
+            li.innerHTML = `
+                <span class="cart-name">${name}</span>
+
+                <div class="cart-qty-box">
+                    <button class="qty-btn" onclick="updateCartQty(this, -1)">−</button>
+                    <span class="cart-qty">1</span>
+                    <button class="qty-btn" onclick="updateCartQty(this, 1)">+</button>
                 </div>
-              `;
-              slides.appendChild(s);
 
-              const d = document.createElement("div");
-              d.className = "dot";
-              d.onclick = () => go(i);
-              dotsWrap.appendChild(d);
-            });
+                <span class="cart-price">₹${price}</span>
 
-            function updateDots(){
-              [...dotsWrap.children].forEach((d,i)=>d.classList.toggle("active", i===index));
-            }
-            function go(i){
-              index = (i + images.length) % images.length;
-              slides.style.transform = `translateX(-${index*100}%)`;
-              updateDots();
-              reset();
-            }
-            function next(){ go(index+1); }
 
-            function start(){ timer = setInterval(next, 3500); }
-            function reset(){ clearInterval(timer); start(); }
+               
+            `;
 
-            updateDots(); start();
-
-            /* Swipe support */
-            let x0 = null;
-            slides.addEventListener("touchstart", e=>x0=e.touches[0].clientX);
-            slides.addEventListener("touchend", e=>{
-              if(x0===null) return;
-              let dx = e.changedTouches[0].clientX - x0;
-              if(dx > 50) go(index-1);
-              if(dx < -50) go(index+1);
-              x0 = null;
-            });
-
-            /* Pause on hover */
-            document.querySelector('.slider').addEventListener('mouseenter', ()=>clearInterval(timer));
-            document.querySelector('.slider').addEventListener('mouseleave', start);
-        </script>
+            cart.appendChild(li);
+            total += price;
+        }
         
         
-    </body>
+
+        document.getElementById("total").innerText = total;
+    }
+    
+    
+
+    function updateCartQty(btn, change) {
+        const li = btn.closest("li");
+        const qtyEl = li.querySelector(".cart-qty");
+        const price = parseInt(li.dataset.price);
+        let qty = parseInt(qtyEl.innerText) + change;
+
+        if (qty <= 0) {
+            removeCartItem(btn);
+            return;
+        }
+
+        qtyEl.innerText = qty;
+        li.querySelector(".cart-price").innerText = `₹${qty * price}`;
+
+
+        total += change * price;
+        document.getElementById("total").innerText = total;
+    }
+
+    function removeCartItem(el) {
+        const li = el.closest("li");
+        const price = parseInt(li.dataset.price);
+        const qty = parseInt(li.querySelector(".cart-qty").innerText);
+
+        total -= price * qty;
+        li.remove();
+
+        document.getElementById("total").innerText = total;
+    }
+
+    
+    /* Pause on hover */
+    document.querySelector('.slider').addEventListener('mouseenter', ()=>clearInterval(timer));
+    document.querySelector('.slider').addEventListener('mouseleave', start);
+
+</script>
+
+</body>
 </html>
