@@ -72,7 +72,7 @@
                     .section-title{color:#fff;padding:10px 20px;font-size:20px;font-weight:bold}
                     
                     .grand-menu{background:#102822;position:sticky;top:0;z-index:9;padding:12px}
-                    .menu-row{display:flex;justify-content:center;gap:30px;flex-wrap:wrap}
+                    .menu-row{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
                     .menu-group{display:flex;gap:10px;align-items:center}
                     .menu-group span{color:#d4af37;font-size:12px}
                     .menu-group button{background:transparent;border:1px solid rgba(212,175,55,.5);color:#fff;
@@ -108,14 +108,21 @@
                         margin: 0;
                     }
                     
+                    
                     #cartItems li {
                         display: grid;
-                        grid-template-columns: 1fr auto auto auto;
+                        grid-template-columns: 30px 1fr auto auto;
                         align-items: center;
-                        gap: 12px;
+                        gap: 10px;
                         padding: 10px 0;
                         border-bottom: 1px dashed #ddd;
                         font-size: 14px;
+                    }
+
+                    .cart-serial {
+                        font-weight: bold;
+                        color: #555;
+                        text-align: center;
                     }
                     
                     /* Product name */
@@ -405,26 +412,30 @@
                         display: none;
                     }
                     
-                    /* ===== DELIVERY INFO ===== */
-                    .delivery-info {
-                        margin: 20px;
-                        padding: 14px;
-                        background: #1C3A33;
-                        border-radius: 10px;
-                        border: 1px solid rgba(212,175,55,.25);
-                        text-align: left;
+                    /* ===== CART LOCATION ===== */
+                    .cart-location {
+                        margin: 15px 0;
                     }
 
-                    .delivery-info h4 {
-                        margin: 0 0 8px;
-                        color: #d4af37;
-                        font-size: 14px;
+                    .cart-location label {
+                        display: block;
+                        font-size: 13px;
+                        font-weight: bold;
+                        color: #102822;
+                        margin-bottom: 6px;
+                    }
+                    
+                    #locationSelect:focus {
+                        outline: none;
+                        border-color: red;
+                        box-shadow: 0 0 6px rgba(255, 0, 0, 0.6);
                     }
 
-                    .delivery-info p {
-                        margin: 4px 0;
+
+                    .delivery-note {
+                        margin-top: 6px;
                         font-size: 12px;
-                        color: #ffffff;
+                        color: #555;
                     }
                     
                     /* ===== RETURN POLICY ===== */
@@ -450,6 +461,13 @@
                         color: #ffffff;
                         line-height: 1.4;
                     }
+                    
+                    footer {
+                        background: #1C3A33;
+                        color: white;
+                        text-align: center;
+                        padding: 10px;
+                    }
 
                     /* Mobile */
                     @media (max-width: 768px) {
@@ -459,22 +477,6 @@
                         }
                     }
 
-
-                    /* Mobile spacing */
-                    @media (max-width: 768px) {
-                        .delivery-info {
-                            margin: 12px;
-                            padding: 12px;
-                        }
-                    }
-
-                    
-                    footer {
-                        background: #1C3A33;
-                        color: white;
-                        text-align: center;
-                        padding: 10px;
-                    }
                     
                     /* Animation */
                     @keyframes announcementScroll {
@@ -530,7 +532,7 @@
                     <div class="menu-row">
                         
                         <div class="menu-group">
-                            <span>Perfumes</span>
+                            <span>Category</span>
                             <select class="ml-dropdown" onchange="setCategory(this.value)">
                                 <option value="all" selected>All</option>
                                 <option value="french">French</option>
@@ -601,9 +603,25 @@
         </div>
         <section class="container" id="carProducts"></section>
         
+        
         <div class="cart">
             <h3>🛒 Cart</h3>
+            
             <ul id="cartItems"></ul>
+            
+            <div class="cart-location">
+                <label for="locationSelect">📍 Delivery Location *</label>
+                <select id="locationSelect" class="ml-dropdown" onchange="setLocation(this.value)">
+                    <option value="">Select Location</option>
+                    <option value="coimbatore">Coimbatore</option>
+                    <option value="tamilnadu">Tamil Nadu</option>
+                    <option value="south">Kerala & Karnataka</option>
+                </select>
+
+                <p id="deliveryNote" class="delivery-note">
+                    Please select location to calculate delivery charge
+                </p>
+            </div>
 
             <h3 id="cartTotalRow">
                 Total ₹<span id="total">0</span>
@@ -612,15 +630,6 @@
             <p id="emptyCartMsg" class="empty-cart-msg">
                 🛒 Your cart is empty. Add some fragrances to continue.
             </p>
-        </div>
-        
-        <div class="delivery-info">
-            <h4>🚚 Delivery Charges</h4>
-            <p>• Free delivery for orders above <strong>₹999</strong></p>
-            <p>• Shipment within Tamilnadu <strong>₹50</strong></p>
-            <p>• Shipment Outside Tamilnadu (Kerala & Karnataka) <strong>₹60</strong></p>
-            <p>• Shipment within Coimbatore <strong>₹40</strong></p>
-            <p>• Same-day / next-day delivery available (location based)</p>
         </div>
 
         <div class="policy-info">
@@ -718,7 +727,11 @@
         
         
         <script>
-            
+            let selectedLocation = "";
+            let deliveryCharge = 0;
+            let finalTotal = 0;
+
+
             /* ---------- DATA ---------- */
             const sliderFrenchLuxury = [
                                         {name:"Jannatul Firdaus", inspired:"Jannatul Firdaus", image:"images/1JannatulFirdausQuality.png"},
@@ -993,11 +1006,75 @@
             
             renderSlider();
             startAutoSlider();
+            updateDeliveryNote();
+
             
+            function setLocation(location) {
+                selectedLocation = location;
+
+                if (location === "coimbatore") {
+                    deliveryCharge = 40;
+                } else if (location === "tamilnadu") {
+                    deliveryCharge = 50;
+                } else if (location === "south") {
+                    deliveryCharge = 60;
+                } else {
+                    deliveryCharge = 0;
+                }
+
+                calculateFinalTotal();
+            }
+            
+            function calculateFinalTotal() {
+
+                // Free delivery for orders ₹1000 and above
+                if (total >= 1000) {
+                    finalTotal = total;
+                } else {
+                    finalTotal = total + deliveryCharge;
+                }
+
+                // Update UI
+                document.getElementById("total").innerText = finalTotal;
+
+                updateDeliveryNote();
+            }
+
+
+
+            function updateDeliveryNote() {
+                const note = document.getElementById("deliveryNote");
+
+                if (!selectedLocation) {
+                    note.innerText = "Please select location to calculate delivery charge";
+                    return;
+                }
+
+                if (total >= 1000) {
+                    note.innerText = "🚚 Free delivery (Order above ₹1000)";
+                } else {
+                    note.innerText = "🚚 Delivery Charge: ₹" + deliveryCharge;
+                }
+            }
+
+
             
             const phoneNumber = "919487860718";
             
             function sendWhatsAppOrder() {
+                
+                if (!selectedLocation) {
+                    alert("Please select delivery location in the cart.");
+                    
+                    // 👉 Focus location dropdown after scroll
+                           setTimeout(() => {
+                               document.getElementById("locationSelect").focus();
+                           }, 10);
+                    
+                    return;
+                }
+                
+                
                 const cartItems = document.querySelectorAll("#cartItems li");
                 
                 if (cartItems.length === 0) {
@@ -1011,8 +1088,16 @@
                     message += "• " + item.innerText.replace("✖", "").trim() + "%0A";
                 });
                 
-                message += "%0A💰 *Total:* ₹" + total;
-                
+                message += "%0A💰 *Subtotal:* ₹" + total;
+
+                if (total >= 1000) {
+                    message += "%0A🚚 *Delivery:* FREE";
+                } else {
+                    message += "%0A🚚 *Delivery:* ₹" + deliveryCharge;
+                }
+
+                message += "%0A💵 *Total Payable:* ₹" + finalTotal;
+
                 const url = `https://wa.me/${phoneNumber}?text=${message}`;
                 
                 window.open(url, "_blank");
@@ -1042,19 +1127,19 @@
                     li.setAttribute("data-price", price);
                     
                     li.innerHTML = `
-                <span class="cart-name">${name}</span>
-            
-                <div class="cart-qty-box">
-                    <button class="qty-btn" onclick="updateCartQty(this, -1)">−</button>
-                    <span class="cart-qty">1</span>
-                    <button class="qty-btn" onclick="updateCartQty(this, 1)">+</button>
-                </div>
-            
-                <span class="cart-price">₹${price}</span>
-            
-            
-               
-            `;
+                        <span class="cart-serial"></span>
+
+                        <span class="cart-name">${name}</span>
+
+                        <div class="cart-qty-box">
+                            <button class="qty-btn" onclick="updateCartQty(this, -1)">−</button>
+                            <span class="cart-qty">1</span>
+                            <button class="qty-btn" onclick="updateCartQty(this, 1)">+</button>
+                        </div>
+
+                        <span class="cart-price">₹${price}</span>
+                    `;
+
             
             cart.appendChild(li);
             total += price;
@@ -1064,10 +1149,21 @@
                 
                 document.getElementById("total").innerText = total;
                 
-                updateTopCart();
+                calculateFinalTotal();
                 toggleEmptyCartMessage();
+                updateTopCart();
+                updateCartSerialNumbers();
 
             }
+            
+            function updateCartSerialNumbers() {
+                const items = document.querySelectorAll("#cartItems li");
+
+                items.forEach((li, index) => {
+                    li.querySelector(".cart-serial").innerText = index + 1 + ".";
+                });
+            }
+
             
             function updateTopCart() {
                 const items = document.querySelectorAll("#cartItems li");
@@ -1091,6 +1187,7 @@
                     totalQty + (totalQty === 1 ? " item" : " items");
                     document.getElementById("cartTotal").innerText = "₹" + total;
                 }
+                
             }
             
             
@@ -1118,8 +1215,10 @@
                 total += change * price;
                 document.getElementById("total").innerText = total;
                 
-                updateTopCart();
+                calculateFinalTotal();
                 toggleEmptyCartMessage();
+                updateTopCart();
+                updateCartSerialNumbers();
 
             }
             
@@ -1133,8 +1232,10 @@
                 
                 document.getElementById("total").innerText = total;
                 
-                updateTopCart();
+                calculateFinalTotal();
                 toggleEmptyCartMessage();
+                updateTopCart();
+                updateCartSerialNumbers();
 
             }
             
