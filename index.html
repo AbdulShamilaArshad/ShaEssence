@@ -42,7 +42,7 @@
                     
                     
                     
-                    .product-card{position:absolute;left:10%;bottom:7%;width:75%;height:60%;padding:22px;color:#fff;
+                    .product-card{position:absolute;left:10%;bottom:7%;width:75%;height:6   0%;padding:22px;color:#fff;
                         background:rgba(0,0,0,.35);border:1px solid rgba(212,175,55,.4);border-radius:16px}
                     .product-card h1{margin:0;font-size:42px}
                     .product-card .price{color:#d4af37;font-size:28px;font-weight:700}
@@ -468,6 +468,53 @@
                         text-align: center;
                         padding: 10px;
                     }
+                    
+                    
+                    .feedback-modal {
+                      position: fixed;
+                      inset: 0;
+                      background: rgba(0,0,0,0.6);
+                      display: none;
+                      justify-content: center;
+                      align-items: center;
+                      z-index: 9999;
+                    }
+
+                    .feedback-content {
+                      background: #fff;
+                      padding: 16px;
+                      width: 90%;
+                      max-width: 320px;
+                      border-radius: 10px;
+                      text-align: center;
+                    }
+
+                    .star-input span {
+                      font-size: 22px;
+                      cursor: pointer;
+                    }
+
+                    .feedback-content textarea {
+                      width: 100%;
+                      height: 80px;
+                      margin: 10px 0;
+                      padding: 8px;
+                    }
+
+                    .review-btn {
+                      background: transparent;
+                      border: none;
+                      color: #1c3a33;
+                      font-size: 12px;
+                      cursor: pointer;
+                      margin-bottom: 6px;
+                    }
+
+                    .close-btn {
+                      background: #ddd;
+                      margin-left: 6px;
+                    }
+
 
                     /* Mobile */
                     @media (max-width: 768px) {
@@ -499,7 +546,7 @@
                             padding: 0 20px;
                         }
                     }
-
+                    
                     /* Mobile */
                     @media (max-width: 768px) {
                         .product-card {
@@ -738,23 +785,79 @@
 
             /* ---------- DATA ---------- */
             const sliderFrenchLuxury = [
-                                        {name:"Jannatul Firdaus", inspired:"Jannatul Firdaus", image:"images/1JannatulFirdausQuality.png"},
-                                        {name:"Victory Seven", inspired:"CR7", image:"images/2VictorySevenQuality.png"},
-                                        {name:"Bold Executive", inspired:"Hugo Boss", image:"images/6BoldExecutiveQuality.png"},
-                                        {name:"Marine Voyageur", inspired:"Nautica Voyage", image:"images/22MarineVoyageurQuality.png"},
-                                        {name:"Road Legend", inspired:"Harley Davidson", image:"images/23RoadlegendQuality.png"}
+                                        {
+                                          name: "Jannatul Firdaus",
+                                          inspired: "Jannatul Firdaus",
+                                          image: "images/1JannatulFirdausQuality.png",
+                                          description: "A heavenly blend of fresh florals and soft musk, offering a calm, spiritual, and long-lasting fragrance suitable for all occasions."
+                                        },
+
+                                        {
+                                          name: "Victory Seven",
+                                          inspired: "CR7",
+                                          image: "images/2VictorySevenQuality.png",
+                                          description: "An energetic and masculine fragrance with fresh citrus opening and woody undertones, perfect for confident and active men."
+                                        },
+
+                                        {
+                                          name: "Bold Executive",
+                                          inspired: "Hugo Boss",
+                                          image: "images/6BoldExecutiveQuality.png",
+                                          description: "A sophisticated scent with clean aromatic notes and warm woods, designed for professionals who value elegance and confidence."
+                                        },
+                                        {
+                                          name: "Marine Voyageur",
+                                          inspired: "Nautica Voyage",
+                                          image: "images/22MarineVoyageurQuality.png",
+                                          description: "A refined aquatic fragrance with crisp freshness and smooth woody tones, delivering a clean and refreshing luxury feel."
+                                        },
+
+                                        {
+                                          name: "Road Legend",
+                                          inspired: "Harley Davidson",
+                                          image: "images/23RoadlegendQuality.png",
+                                          description: "A bold and powerful scent with rugged woody and spicy notes, crafted for strong personalities and adventurous spirits."
+                                        }
                                         ];
                                         
                                         
                                         const sliderFrench = [
-                                                              {name:"Jannatul Firdaus", inspired:"Jannatul Firdaus", image:"images/1JannatulFirdausQuality.png"},
-                                                              {name:"Victory Seven", inspired:"CR7", image:"images/2VictorySevenQuality.png"},
-                                                              {name:"Bold Executive", inspired:"Hugo Boss", image:"images/6BoldExecutiveQuality.png"}
+                                                              {
+                                                                name: "Jannatul Firdaus",
+                                                                inspired: "Jannatul Firdaus",
+                                                                image: "images/1JannatulFirdausQuality.png",
+                                                                description: "A heavenly blend of fresh florals and soft musk, offering a calm, spiritual, and long-lasting fragrance suitable for all occasions."
+                                                              },
+
+                                                              {
+                                                                name: "Victory Seven",
+                                                                inspired: "CR7",
+                                                                image: "images/2VictorySevenQuality.png",
+                                                                description: "An energetic and masculine fragrance with fresh citrus opening and woody undertones, perfect for confident and active men."
+                                                              },
+
+                                                              {
+                                                                name: "Bold Executive",
+                                                                inspired: "Hugo Boss",
+                                                                image: "images/6BoldExecutiveQuality.png",
+                                                                description: "A sophisticated scent with clean aromatic notes and warm woods, designed for professionals who value elegance and confidence."
+                                                              }
                                                               ];
                                                               
                                                               const sliderLuxury = [
-                                                                                    {name:"Marine Voyageur", inspired:"Nautica Voyage", image:"images/22MarineVoyageurQuality.png"},
-                                                                                    {name:"Road Legend", inspired:"Harley Davidson", image:"images/23RoadlegendQuality.png"}
+                                                                                    {
+                                                                                      name: "Marine Voyageur",
+                                                                                      inspired: "Nautica Voyage",
+                                                                                      image: "images/22MarineVoyageurQuality.png",
+                                                                                      description: "A refined aquatic fragrance with crisp freshness and smooth woody tones, delivering a clean and refreshing luxury feel."
+                                                                                    },
+
+                                                                                    {
+                                                                                      name: "Road Legend",
+                                                                                      inspired: "Harley Davidson",
+                                                                                      image: "images/23RoadlegendQuality.png",
+                                                                                      description: "A bold and powerful scent with rugged woody and spicy notes, crafted for strong personalities and adventurous spirits."
+                                                                                    }
                                                                                     ];
                                                                                     
                                                                                     
@@ -782,45 +885,193 @@
             
             
             /* ✅ French Perfumes */
-            const frenchPerfumes = [
-                                    { name: "Jannatul Firdaus", inspired: "Jannatul Firdaus", image: "images/1JannatulFirdausQuality.png" },
-                                    { name: "Victory Seven", inspired: "CR7", image: "images/2VictorySevenQuality.png" },
-                                    { name: "Bold Executive", inspired: "Hugo Boss", image: "images/6BoldExecutiveQuality.png" },
-                                    { name: "Cool Water Blue", inspired: "Cool Water Blue", image: "images/7CoolWaterBlueQuality.png" },
-                                    { name: "Velora", inspired: "Escada", image: "images/5VeloraQuality.png" },
-                                    { name: "Royal Ascent", inspired: "Creed Aventus", image: "images/4RoyalAscentQuality.png" },
-                                    { name: "Azudream", inspired: "Desire Blue", image: "images/11AzudreamQuality.png" },
-                                    { name: "Urban Escape", inspired: "Burberry Weekend", image: "images/16UrbanEscapeQuality.png" },
+                                    const frenchPerfumes = [
 
-                                    { name: "Arabian Veil", inspired: "Sabaya", image: "images/3ArabianVeilQuality.png" },
-                                    { name: "Elite Sport", inspired: "Polo Sport", image: "images/9EliteSportQuality.png" },
-                                    { name: "Black Signature", inspired: "Classic Black", image: "images/8BlackSignatureQuality.png" },
-                                   
-                                    
-                                    { name: "Crimson Desire", inspired: "Desire Red", image: "images/10CrimsonDesireQuality.png" },
-                                    { name: "Azurielle", inspired: "D&G Light Blue", image: "images/12AzurielleQuality.png" },
-                                    { name: "Bleuvara", inspired: "Blue De Channel", image: "images/13BleuvaraQuality.png" },
-                                    
-                                    
-                                    { name: "Amethyst Oud", inspired: "Purple Oud", image: "images/14AmethystOudQuality.png" },
-                                    { name: "NoirCocoa", inspired: "Chanel Coco", image: "images/15NoirCocoaQuality.png" },
-                                    
-                                    
-                                    { name: "Exotique", inspired: "Chastity Women", image: "images/17ExotiqueQuality.png" },
-                                    { name: "Marench", inspired: "Sea Rose", image: "images/18MarenchQuality.png" },
-                                    { name: "Tropibliss", inspired: "Good Girl", image: "images/19TropiblissQuality.png" },
-                                    
-                                    { name: "Veloria", inspired: "Victoria Secret", image: "images/20VeloriaQuality.png" },
-                                    { name: "Fortuné", inspired: "One Million Lucky", image: "images/21FortuneQuality.png" }
+                                    {
+                                      name: "Jannatul Firdaus",
+                                      inspired: "Jannatul Firdaus",
+                                      image: "images/1JannatulFirdausQuality.png",
+                                      description: "A heavenly blend of fresh florals and soft musk, offering a calm, spiritual, and long-lasting fragrance suitable for all occasions."
+                                    },
+
+                                    {
+                                      name: "Victory Seven",
+                                      inspired: "CR7",
+                                      image: "images/2VictorySevenQuality.png",
+                                      description: "An energetic and masculine fragrance with fresh citrus opening and woody undertones, perfect for confident and active men."
+                                    },
+
+                                    {
+                                      name: "Bold Executive",
+                                      inspired: "Hugo Boss",
+                                      image: "images/6BoldExecutiveQuality.png",
+                                      description: "A sophisticated scent with clean aromatic notes and warm woods, designed for professionals who value elegance and confidence."
+                                    },
+
+                                    {
+                                      name: "Cool Water Blue",
+                                      inspired: "Cool Water Blue",
+                                      image: "images/7CoolWaterBlueQuality.png",
+                                      description: "A refreshing aquatic fragrance with cool marine notes that deliver a clean, crisp, and refreshing experience."
+                                    },
+
+                                    {
+                                      name: "Velora",
+                                      inspired: "Escada",
+                                      image: "images/5VeloraQuality.png",
+                                      description: "A vibrant and fruity floral fragrance with a sweet and youthful charm, perfect for cheerful and energetic personalities."
+                                    },
+
+                                    {
+                                      name: "Royal Ascent",
+                                      inspired: "Creed Aventus",
+                                      image: "images/4RoyalAscentQuality.png",
+                                      description: "A powerful and luxurious fragrance featuring fruity freshness blended with smoky woods, crafted for bold leaders."
+                                    },
+
+                                    {
+                                      name: "Azudream",
+                                      inspired: "Desire Blue",
+                                      image: "images/11AzudreamQuality.png",
+                                      description: "A cool and breezy fragrance with aquatic freshness and subtle sweetness, ideal for everyday wear."
+                                    },
+
+                                    {
+                                      name: "Urban Escape",
+                                      inspired: "Burberry Weekend",
+                                      image: "images/16UrbanEscapeQuality.png",
+                                      description: "A relaxed and refreshing fragrance with citrus and green notes, perfect for casual outings and weekend vibes."
+                                    },
+
+                                    {
+                                      name: "Arabian Veil",
+                                      inspired: "Sabaya",
+                                      image: "images/3ArabianVeilQuality.png",
+                                      description: "A rich oriental blend with floral sweetness and soft musk, delivering a traditional yet elegant Arabian aroma."
+                                    },
+
+                                    {
+                                      name: "Elite Sport",
+                                      inspired: "Polo Sport",
+                                      image: "images/9EliteSportQuality.png",
+                                      description: "A fresh and sporty fragrance with crisp citrus and aromatic notes, ideal for active and energetic lifestyles."
+                                    },
+
+                                    {
+                                      name: "Black Signature",
+                                      inspired: "Classic Black",
+                                      image: "images/8BlackSignatureQuality.png",
+                                      description: "A deep and mysterious fragrance with warm spicy and woody accords, perfect for evening and special occasions."
+                                    },
+
+                                    {
+                                      name: "Crimson Desire",
+                                      inspired: "Desire Red",
+                                      image: "images/10CrimsonDesireQuality.png",
+                                      description: "A bold and seductive fragrance with warm spices and sweet undertones, crafted to leave a lasting impression."
+                                    },
+
+                                    {
+                                      name: "Azurielle",
+                                      inspired: "D&G Light Blue",
+                                      image: "images/12AzurielleQuality.png",
+                                      description: "A bright and fresh fragrance with citrus and floral notes, delivering a light, clean, and refreshing feel."
+                                    },
+
+                                    {
+                                      name: "Bleuvara",
+                                      inspired: "Blue De Channel",
+                                      image: "images/13BleuvaraQuality.png",
+                                      description: "A modern and elegant fragrance combining citrus freshness with woody depth, ideal for confident men."
+                                    },
+
+                                    {
+                                      name: "Amethyst Oud",
+                                      inspired: "Purple Oud",
+                                      image: "images/14AmethystOudQuality.png",
+                                      description: "A luxurious blend of rich oud and warm oriental notes, offering a deep, intense, and long-lasting scent."
+                                    },
+
+                                    {
+                                      name: "NoirCocoa",
+                                      inspired: "Chanel Coco",
+                                      image: "images/15NoirCocoaQuality.png",
+                                      description: "A sophisticated floral-oriental fragrance with warm spices and smooth sweetness, perfect for elegant evenings."
+                                    },
+
+                                    {
+                                      name: "Exotique",
+                                      inspired: "Chastity Women",
+                                      image: "images/17ExotiqueQuality.png",
+                                      description: "A soft and graceful floral fragrance with gentle sweetness, designed for everyday feminine elegance."
+                                    },
+
+                                    {
+                                      name: "Marench",
+                                      inspired: "Sea Rose",
+                                      image: "images/18MarenchQuality.png",
+                                      description: "A fresh floral fragrance with aquatic rose notes, creating a calm and refreshing seaside feel."
+                                    },
+
+                                    {
+                                      name: "Tropibliss",
+                                      inspired: "Good Girl",
+                                      image: "images/19TropiblissQuality.png",
+                                      description: "A glamorous blend of sweet florals and warm vanilla notes, perfect for confident and stylish women."
+                                    },
+
+                                    {
+                                      name: "Veloria",
+                                      inspired: "Victoria Secret",
+                                      image: "images/20VeloriaQuality.png",
+                                      description: "A charming and feminine fragrance with fruity sweetness and soft florals, ideal for daily wear."
+                                    },
+
+                                    {
+                                      name: "Fortuné",
+                                      inspired: "One Million Lucky",
+                                      image: "images/21FortuneQuality.png",
+                                      description: "A vibrant and playful fragrance with sweet, woody, and nutty notes, designed for bold and lucky moments."
+                                    }
+
                                     ];
+
+
                                     
                                     /* ✅ Luxury Perfumes */
                                     const luxuryPerfumes = [
-                                                            { name: "Marine Voyageur", inspired: "Nautica Voyage", image: "images/22MarineVoyageurQuality.png" },
-                                                            { name: "Road Legend", inspired: "Harley Davidson", image: "images/23RoadlegendQuality.png" },
-                                                            { name: "White Oud", inspired: "White Oud", image: "images/24WhiteOudQuality.png" },
-                                                            { name: "Luxflame", inspired: "Eros Flame", image: "images/25LuxflameQuality.png" }
+
+                                                            {
+                                                              name: "Marine Voyageur",
+                                                              inspired: "Nautica Voyage",
+                                                              image: "images/22MarineVoyageurQuality.png",
+                                                              description: "A refined aquatic fragrance with crisp freshness and smooth woody tones, delivering a clean and refreshing luxury feel."
+                                                            },
+
+                                                            {
+                                                              name: "Road Legend",
+                                                              inspired: "Harley Davidson",
+                                                              image: "images/23RoadlegendQuality.png",
+                                                              description: "A bold and powerful scent with rugged woody and spicy notes, crafted for strong personalities and adventurous spirits."
+                                                            },
+
+                                                            {
+                                                              name: "White Oud",
+                                                              inspired: "White Oud",
+                                                              image: "images/24WhiteOudQuality.png",
+                                                              description: "A smooth and elegant oud fragrance blended with soft oriental warmth, offering a rich yet balanced luxury aroma."
+                                                            },
+
+                                                            {
+                                                              name: "Luxflame",
+                                                              inspired: "Eros Flame",
+                                                              image: "images/25LuxflameQuality.png",
+                                                              description: "A vibrant and intense fragrance combining warm spices and sweet freshness, designed to make a confident and lasting impression."
+                                                            }
+
                                                             ];
+
+
                                                             
                                                             const prices={
                                                                 3:{french:50,luxury:60},
@@ -837,23 +1088,66 @@
             let total=0;
             
             
+            function renderStars(rating) {
+              let stars = "";
+              for (let i = 1; i <= 5; i++) {
+                stars += i <= rating ? "★" : "☆";
+              }
+              return stars;
+            }
+
+            function getFeedbackData(productName) {
+              return JSON.parse(localStorage.getItem("feedback_" + productName)) || [];
+            }
+
+            function saveFeedback(productName, data) {
+              localStorage.setItem("feedback_" + productName, JSON.stringify(data));
+            }
+            
+            function calculateAverageRating(productName) {
+              const feedbacks = getFeedbackData(productName);
+              if (feedbacks.length === 0) return { avg: 0, count: 0 };
+
+              const total = feedbacks.reduce((sum, f) => sum + f.rating, 0);
+              return {
+                avg: (total / feedbacks.length).toFixed(1),
+                count: feedbacks.length
+              };
+            }
+
+
             
             /* ---------- LOAD PRODUCTS ---------- */
-            function loadProducts(list,containerId,price){
-                const c=document.getElementById(containerId);
-                c.innerHTML="";
-                list.forEach(p=>{
-                    c.innerHTML+=`
-<div class="card">
-<img src="${p.image}">
-<h3>${p.name}</h3>
-<small>Inspired from ${p.inspired}</small>
-<p><strong>${currentML} ML</strong></p>
-<p>₹${price}</p>
-<button onclick="addToCart('${p.name} (${currentML} ML)',${price})">Add to Cart</button>
-</div>`;
-                });
+            function loadProducts(list, containerId, price) {
+              const c = document.getElementById(containerId);
+              c.innerHTML = "";
+
+              list.forEach(p => {
+
+                c.innerHTML += `
+                  <div class="card">
+                    <img src="${p.image}">
+                    <h3>${p.name}</h3>
+                    <small>Inspired from ${p.inspired}</small>
+
+                    <p style="font-size:12px;color:#444;margin:6px 0;">
+                      ${p.description}
+                    </p>
+
+                
+                
+                    <p><strong>${currentML} ML</strong></p>
+                    <p>₹${price}</p>
+
+                    <button onclick="addToCart('${p.name} (${currentML} ML)', ${price})">
+                      Add to Cart
+                    </button>
+                  </div>
+                `;
+              });
             }
+
+            
             
             /* ---------- FILTER ---------- */
             function filter(){
@@ -900,6 +1194,7 @@
                 
                 
             }
+            
             
             function toggleAnnouncement() {
                 const announcement = document.querySelector(".announcement-group");
@@ -958,7 +1253,10 @@
      <div class="product-card">
        <h1>${p.name}</h1>
        <p>Inspired from ${p.inspired}</p>
-       <p>Size: ${currentML} ML</p>
+   <p style="font-size:14px;opacity:0.9;margin:6px 0;">
+     ${p.description}
+   </p>
+   <p>Size: ${currentML} ML</p>
        <div class="price">₹${price}</div>
        <button onclick="addToCart('${p.name} (${currentML} ML)',${price})">
          Add to Cart
@@ -1004,7 +1302,6 @@
                 }
             }
 
-            
             
             /* ---------- INIT ---------- */
             toggleEmptyCartMessage()
@@ -1255,4 +1552,3 @@
         
     </body>
 </html>
-
