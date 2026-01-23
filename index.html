@@ -514,6 +514,83 @@
                       background: #ddd;
                       margin-left: 6px;
                     }
+                    
+                    .add-btn {
+                      width: 100%;
+                      background: linear-gradient(135deg, #d4af37, #b8952a);
+                      color: #000;
+                      border: none;
+                      padding: 12px 14px;
+                      margin-top: 10px;
+                      border-radius: 10px;
+                      font-weight: bold;
+                      font-size: 14px;
+                      cursor: pointer;
+                      transition: all 0.3s ease;
+                      box-shadow: 0 4px 10px rgba(212, 175, 55, 0.35);
+                    }
+
+                    .add-btn:hover {
+                      background: linear-gradient(135deg, #e6c75a, #caa23a);
+                      transform: translateY(-1px);
+                      box-shadow: 0 6px 16px rgba(212, 175, 55, 0.45);
+                    }
+
+                    .add-btn:active {
+                      transform: scale(0.97);
+                    }
+
+
+                    .add-btn:disabled {
+                      background: #ccc;
+                      color: #666;
+                      cursor: not-allowed;
+                      box-shadow: none;
+                    }
+
+                    .qty-value {
+                      min-width: 22px;
+                      text-align: center;
+                      font-weight: bold;
+                      font-size: 14px;
+                      color: #102822;
+                    }
+
+
+                    .qty-control {
+                      display: flex;
+                      align-items: center;      /* vertical alignment */
+                      justify-content: center;  /* center horizontally */
+                      gap: 10px;                /* space between − 1 + */
+                      margin-top: 10px;
+                    }
+
+                    .qty-control .qty-btn {
+                      width: 30px;
+                      height: 30px;
+                      border-radius: 8px;
+                      border: none;
+                      background: #102822;
+                      color: #d4af37;
+                      font-size: 18px;
+                      font-weight: bold;
+                      cursor: pointer;
+
+                      display: flex;                 /* 🔥 */
+                      align-items: center;           /* 🔥 vertical center */
+                      justify-content: center;       /* 🔥 horizontal center */
+
+                      line-height: 1;                /* 🔥 prevents text shift */
+                      padding: 0;                    /* 🔥 removes default button padding */
+                    }
+
+                    .qty-control .qty {
+                      min-width: 20px;
+                      text-align: center;
+                      font-weight: bold;
+                      font-size: 14px;
+                      color: #102822;
+                    }
 
 
                     /* Mobile */
@@ -730,32 +807,60 @@
                 if(currentCarML == 8){
                     eightMLcarPerfumes.forEach(item => {
                         container.innerHTML += `
-          <div class="card">
-            <img src="${item.image}">
-            <h3>${item.name}</h3>
-            <small>${item.inspired}</small>
-            <p><strong>${currentCarML} ML</strong></p>
-            <p>₹${carPrices[currentCarML]}</p>
-            <button onclick="addToCart('${item.name} (${currentCarML} ML)', ${carPrices[currentCarML]})">
-              Add to Cart
-            </button>
-          </div>
-        `;
+                          <div class="card">
+                            <img src="${item.image}">
+                            <h3>${item.name}</h3>
+                            <small>${item.inspired}</small>
+
+                            <p><strong>${currentCarML} ML</strong></p>
+                            <p>₹${carPrices[currentCarML]}</p>
+
+                            <!-- ADD BUTTON -->
+                            <button class="add-btn"
+                              onclick="addCarToCart(this, '${item.name}', ${carPrices[currentCarML]})">
+                              Add to Cart
+                            </button>
+
+                            <!-- QTY CONTROL -->
+                            <div class="qty-control" style="display:none;">
+                              <button class="qty-btn"
+                                onclick="changeCarQty(this, -1, '${item.name}', ${carPrices[currentCarML]})">−</button>
+                              <span class="qty">1</span>
+                              <button class="qty-btn"
+                                onclick="changeCarQty(this, 1, '${item.name}', ${carPrices[currentCarML]})">+</button>
+                            </div>
+                          </div>
+                        `;
+
                     });
                 }else{
                     tenMLcarPerfumes.forEach(item => {
                         container.innerHTML += `
-          <div class="card">
-            <img src="${item.image}">
-            <h3>${item.name}</h3>
-            <small>${item.inspired}</small>
-            <p><strong>${currentCarML} ML</strong></p>
-            <p>₹${carPrices[currentCarML]}</p>
-            <button onclick="addToCart('${item.name} (${currentCarML} ML)', ${carPrices[currentCarML]})">
-              Add to Cart
-            </button>
-          </div>
-        `;
+                          <div class="card">
+                            <img src="${item.image}">
+                            <h3>${item.name}</h3>
+                            <small>${item.inspired}</small>
+
+                            <p><strong>${currentCarML} ML</strong></p>
+                            <p>₹${carPrices[currentCarML]}</p>
+
+                            <!-- ADD BUTTON -->
+                            <button class="add-btn"
+                              onclick="addCarToCart(this, '${item.name}', ${carPrices[currentCarML]})">
+                              Add to Cart
+                            </button>
+
+                            <!-- QTY CONTROL -->
+                            <div class="qty-control" style="display:none;">
+                              <button class="qty-btn"
+                                onclick="changeCarQty(this, -1, '${item.name}', ${carPrices[currentCarML]})">−</button>
+                              <span class="qty">1</span>
+                              <button class="qty-btn"
+                                onclick="changeCarQty(this, 1, '${item.name}', ${carPrices[currentCarML]})">+</button>
+                            </div>
+                          </div>
+                        `;
+                        
                     });
                 }
                 
@@ -765,6 +870,39 @@
         </script>
         
         <script>
+            
+            function addCarToCart(btn, name, price) {
+              const key = `${name} (${currentCarML} ML)`;
+
+              addToCart(key, price);
+
+              const card = btn.closest(".card");
+              btn.style.display = "none";
+
+              const qtyBox = card.querySelector(".qty-control");
+              qtyBox.style.display = "flex";
+              qtyBox.querySelector(".qty").innerText = 1;
+            }
+
+            function changeCarQty(btn, change, name, price) {
+              const qtyBox = btn.closest(".qty-control");
+              const qtyEl = qtyBox.querySelector(".qty");
+              let qty = parseInt(qtyEl.innerText) + change;
+
+              const key = `${name} (${currentCarML} ML)`;
+
+              if (qty <= 0) {
+                removeCartByName(key);
+
+                qtyBox.style.display = "none";
+                qtyBox.previousElementSibling.style.display = "block";
+                return;
+              }
+
+              qtyEl.innerText = qty;
+              updateCartQtyByName(key, change);
+            }
+
             
             function setCarML(ml) {
                 currentCarML = parseInt(ml);
@@ -909,9 +1047,9 @@
                                     },
 
                                     {
-                                      name: "Cool Water Blue",
+                                      name: "Blue Current",
                                       inspired: "Cool Water Blue",
-                                      image: "images/7CoolWaterBlueQuality.png",
+                                      image: "images/7BlueCurrentQuality.png",
                                       description: "A refreshing aquatic fragrance with cool marine notes that deliver a clean, crisp, and refreshing experience."
                                     },
 
@@ -1133,21 +1271,85 @@
                     <p style="font-size:12px;color:#444;margin:6px 0;">
                       ${p.description}
                     </p>
-
-                
                 
                     <p><strong>${currentML} ML</strong></p>
                     <p>₹${price}</p>
 
-                    <button onclick="addToCart('${p.name} (${currentML} ML)', ${price})">
+                    <button class="add-btn" onclick="addToCartFromCard(this, '${p.name}', ${price})">
                       Add to Cart
                     </button>
+                
+                    <div class="qty-control" style="display:none;">
+                      <button class="qty-btn" onclick="changeQtyFromCard(this, -1, '${p.name}', ${price})">−</button>
+                      <span class="qty">1</span>
+                      <button class="qty-btn" onclick="changeQtyFromCard(this, 1, '${p.name}', ${price})">+</button>
+                    </div>
+
                   </div>
                 `;
               });
             }
 
-            
+            function addToCartFromCard(btn, name, price) {
+              addToCart(name + ` (${currentML} ML)`, price);
+
+              const card = btn.closest(".card");
+              btn.style.display = "none";
+
+              const qtyBox = card.querySelector(".qty-control");
+              qtyBox.style.display = "flex";
+              qtyBox.querySelector(".qty").innerText = 1;
+            }
+
+            function changeQtyFromCard(btn, change, name, price) {
+              const qtyBox = btn.closest(".qty-control");
+              const qtyEl = qtyBox.querySelector(".qty");
+              let qty = parseInt(qtyEl.innerText) + change;
+
+              if (qty <= 0) {
+                // Remove from cart
+                removeCartByName(name + ` (${currentML} ML)`);
+
+                qtyBox.style.display = "none";
+                qtyBox.previousElementSibling.style.display = "block";
+                return;
+              }
+
+              qtyEl.innerText = qty;
+              updateCartQtyByName(name + ` (${currentML} ML)`, change);
+            }
+
+            function updateCartQtyByName(key, change) {
+              const item = document.querySelector(`#cartItems li[data-key="${key}"]`);
+              if (!item) return;
+
+              const price = parseInt(item.dataset.price);
+              const qtyEl = item.querySelector(".cart-qty");
+
+              let qty = parseInt(qtyEl.innerText) + change;
+              qtyEl.innerText = qty;
+
+              item.querySelector(".cart-price").innerText = "₹" + qty * price;
+              total += change * price;
+
+              calculateFinalTotal();
+              updateTopCart();
+            }
+
+            function removeCartByName(key) {
+              const item = document.querySelector(`#cartItems li[data-key="${key}"]`);
+              if (!item) return;
+
+              const price = parseInt(item.dataset.price);
+              const qty = parseInt(item.querySelector(".cart-qty").innerText);
+
+              total -= price * qty;
+              item.remove();
+
+              calculateFinalTotal();
+              updateTopCart();
+            }
+
             
             /* ---------- FILTER ---------- */
             function filter(){
