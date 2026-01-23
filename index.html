@@ -807,7 +807,7 @@
                 if(currentCarML == 8){
                     eightMLcarPerfumes.forEach(item => {
                         container.innerHTML += `
-                          <div class="card">
+                          <div class="card" data-key="${item.name} (${currentCarML} ML)">
                             <img src="${item.image}">
                             <h3>${item.name}</h3>
                             <small>${item.inspired}</small>
@@ -836,7 +836,7 @@
                 }else{
                     tenMLcarPerfumes.forEach(item => {
                         container.innerHTML += `
-                          <div class="card">
+                          <div class="card" data-key="${item.name} (${currentCarML} ML)">
                             <img src="${item.image}">
                             <h3>${item.name}</h3>
                             <small>${item.inspired}</small>
@@ -867,6 +867,7 @@
                 document.getElementById("carTitle").innerText =
                 `🚗 Car Perfumes`;
             }
+            
         </script>
         
         <script>
@@ -1021,6 +1022,7 @@
                 startAutoSlider();
             });
             
+            document.querySelectorAll('.card[data-key]').length
             
             /* ✅ French Perfumes */
                                     const frenchPerfumes = [
@@ -1263,7 +1265,7 @@
               list.forEach(p => {
 
                 c.innerHTML += `
-                  <div class="card">
+                  <div class="card" data-key="${p.name} (${currentML} ML)">
                     <img src="${p.image}">
                     <h3>${p.name}</h3>
                     <small>Inspired from ${p.inspired}</small>
@@ -1420,6 +1422,32 @@
                 filter();
             }
             
+            function syncCardWithCart(key, qty) {
+                const card = document.querySelector(`.card[data-key="${key}"]`);
+                if (!card) return;
+
+                const addBtn = card.querySelector(".add-btn");
+                const qtyBox = card.querySelector(".qty-control");
+                const qtyEl = qtyBox?.querySelector(".qty");
+
+                if (qty <= 0) {
+                    addBtn.style.display = "block";
+                    qtyBox.style.display = "none";
+                } else {
+                    addBtn.style.display = "none";
+                    qtyBox.style.display = "flex";
+                    qtyEl.innerText = qty;
+                }
+            }
+            
+            
+            function restoreCardUIFromCart() {
+              document.querySelectorAll("#cartItems li").forEach(li => {
+                const key = li.dataset.key;
+                const qty = parseInt(li.querySelector(".cart-qty").innerText);
+                syncCardWithCart(key, qty);
+              });
+            }
             
             /* ---------- SLIDER ---------- */
             const slides=document.getElementById("slides");
@@ -1460,12 +1488,13 @@
    </p>
    <p>Size: ${currentML} ML</p>
        <div class="price">₹${price}</div>
-       <button onclick="addToCart('${p.name} (${currentML} ML)',${price})">
+       <button onclick="addToCartFromSlider('${p.name}', ${price})">
          Add to Cart
        </button>
      </div>
    </div>
    `;
+
    
    const d=document.createElement("div");
    d.className="dot";
@@ -1478,7 +1507,16 @@
                 go(0);
             }
             
-            
+            function addToCartFromSlider(name, price) {
+                const key = name + ` (${currentML} ML)`;
+
+                // Add item to cart
+                addToCart(key, price);
+
+                // Sync all product cards
+                restoreCardUIFromCart();
+            }
+                
             function go(i){
                 index=i;
                 slides.style.transform=`translateX(-${i*100}%)`;
@@ -1509,6 +1547,7 @@
             toggleEmptyCartMessage()
             updateTopCart();
             filter();
+            restoreCardUIFromCart()
             
             renderSlider();
             startAutoSlider();
@@ -1659,7 +1698,8 @@
                 toggleEmptyCartMessage();
                 updateTopCart();
                 updateCartSerialNumbers();
-
+                
+                
             }
             
             function updateCartSerialNumbers() {
@@ -1705,12 +1745,14 @@
             
             function updateCartQty(btn, change) {
                 const li = btn.closest("li");
+                const key = li.dataset.key;              // ✅ FIX
                 const qtyEl = li.querySelector(".cart-qty");
                 const price = parseInt(li.dataset.price);
                 let qty = parseInt(qtyEl.innerText) + change;
                 
                 if (qty <= 0) {
                     removeCartItem(btn);
+                    syncCardWithCart(key, 0); // 🔥 SYNC
                     return;
                 }
                 
@@ -1725,11 +1767,13 @@
                 toggleEmptyCartMessage();
                 updateTopCart();
                 updateCartSerialNumbers();
-
+                
+                syncCardWithCart(key, qty); // 🔥 SYNC
             }
             
             function removeCartItem(el) {
                 const li = el.closest("li");
+                const key = li.dataset.key;               // ✅ FIX
                 const price = parseInt(li.dataset.price);
                 const qty = parseInt(li.querySelector(".cart-qty").innerText);
                 
@@ -1742,7 +1786,8 @@
                 toggleEmptyCartMessage();
                 updateTopCart();
                 updateCartSerialNumbers();
-
+                
+                syncCardWithCart(key, 0); // 🔥 SYNC
             }
             
             
